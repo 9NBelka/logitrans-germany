@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/(ua|ua/*)",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
