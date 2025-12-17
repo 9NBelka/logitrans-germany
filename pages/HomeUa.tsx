@@ -125,9 +125,9 @@ export const HomeUa = () => {
               З 2022 року — ваш партнер з ефективності.
             </h3>
             <p className='text-lg text-gray-600 mb-6 leading-relaxed'>
-              AKTrans було засновано з чітким баченням: зробити транспортні послуги більш прозорими,
-              швидкими та надійними. Те, що починалося з однієї вантажівки, сьогодні є потужним
-              автопарком, який щодня перевозить товари по всій Німеччині та Європі.
+              AKUmzüge було засновано з чітким баченням: зробити транспортні послуги більш
+              прозорими, швидкими та надійними. Те, що починалося з однієї вантажівки, сьогодні є
+              потужним автопарком, який щодня перевозить товари по всій Німеччині та Європі.
             </p>
             <p className='text-lg text-gray-600 mb-8 leading-relaxed'>
               Ми зосереджені на середньому бізнесі. Ми розуміємо, що кожна затримка поставки коштує
@@ -235,7 +235,9 @@ export const HomeUa = () => {
       {/* --- Why Us / Value Prop --- */}
       <Section id='why-us' dark>
         <div className='text-center mb-16'>
-          <h2 className='text-signal-500 font-bold tracking-wider uppercase mb-2'>Чому AKTrans?</h2>
+          <h2 className='text-signal-500 font-bold tracking-wider uppercase mb-2'>
+            Чому AKUmzüge?
+          </h2>
           <h3 className='text-4xl font-extrabold text-white'>Ваші переваги та наша гарантія</h3>
         </div>
 
@@ -382,7 +384,7 @@ export const HomeUa = () => {
               <a
                 href='#'
                 className='text-2xl font-extrabold text-white tracking-tighter mb-6 block'>
-                LOGI<span className='text-signal-500'>TRANS</span>
+                AK<span className='text-signal-500'>Umzüge</span>
               </a>
               <p className='text-gray-400 text-sm leading-relaxed mb-6'>
                 Ваш надійний партнер з перевезень та логістичних рішень у Німеччині та Європі.
@@ -421,19 +423,24 @@ export const HomeUa = () => {
                 <li className='flex items-start'>
                   <MapPin size={18} className='mr-3 text-signal-500 mt-0.5' />
                   <span>
-                    Логістична вулиця 1<br />
-                    10115 Берлін
+                    Pflaumdorfer tr.5
+                    <br />
+                    86922 Eresing
                   </span>
                 </li>
                 <li className='flex items-center'>
                   <Phone size={18} className='mr-3 text-signal-500' />
-                  <span>+49 (0) 30 123 456 78</span>
+                  <a href='tel:+4915115885744'>
+                    <span>+49 1511 5885744</span>
+                  </a>
                 </li>
                 <li className='flex items-center'>
                   <span className='w-4 h-4 mr-3 flex items-center justify-center text-signal-500 font-bold'>
                     @
                   </span>
-                  <span>info@AKTrans-example.de</span>
+                  <a href='mailto:hinundher.de@gmail.com' target='_blank'>
+                    <span>hinundher.de@gmail.com</span>
+                  </a>
                 </li>
               </ul>
             </div>
@@ -458,7 +465,7 @@ export const HomeUa = () => {
           </div>
 
           <div className='border-t border-navy-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500'>
-            <p>&copy; 2024 AKTrans GmbH. Усі права захищено.</p>
+            <p>&copy; 2024 AKUmzüge GmbH. Усі права захищено.</p>
             <div className='flex space-x-6 mt-4 md:mt-0'>
               <a href='#' className='hover:text-white'>
                 Вихідні дані

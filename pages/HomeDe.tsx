@@ -114,7 +114,7 @@ export const HomeDe = () => {
               Seit 2022 Ihr Partner für Effizienz.
             </h3>
             <p className='text-lg text-gray-600 mb-6 leading-relaxed'>
-              AKTrans wurde mit einer klaren Vision gegründet: Transportdienstleistungen
+              AKUmzüge wurde mit einer klaren Vision gegründet: Transportdienstleistungen
               transparenter, schneller und zuverlässiger zu gestalten. Was mit einem einzelnen LKW
               begann, ist heute eine leistungsstarke Flotte, die täglich Waren quer durch
               Deutschland und Europa bewegt.
@@ -226,7 +226,7 @@ export const HomeDe = () => {
       <Section id='why-us' dark>
         <div className='text-center mb-16'>
           <h2 className='text-signal-500 font-bold tracking-wider uppercase mb-2'>
-            Warum AKTrans?
+            Warum AKUmzüge?
           </h2>
           <h3 className='text-4xl font-extrabold text-white'>Ihre Vorteile und unsere Garantie</h3>
         </div>
@@ -378,7 +378,7 @@ export const HomeDe = () => {
               <a
                 href='#'
                 className='text-2xl font-extrabold text-white tracking-tighter mb-6 block'>
-                LOGI<span className='text-signal-500'>TRANS</span>
+                AK<span className='text-signal-500'>Umzüge</span>
               </a>
               <p className='text-gray-400 text-sm leading-relaxed mb-6'>
                 Ihr zuverlässiger Partner für Transporte und Logistiklösungen in Deutschland und
@@ -429,19 +429,24 @@ export const HomeDe = () => {
                 <li className='flex items-start'>
                   <MapPin size={18} className='mr-3 text-signal-500 mt-0.5' />
                   <span>
-                    Logistikstraße 1<br />
-                    10115 Berlin
+                    Pflaumdorfer tr.5
+                    <br />
+                    86922 Eresing
                   </span>
                 </li>
                 <li className='flex items-center'>
                   <Phone size={18} className='mr-3 text-signal-500' />
-                  <span>+49 (0) 30 123 456 78</span>
+                  <a href='tel:+4915115885744'>
+                    <span>+49 1511 5885744</span>
+                  </a>
                 </li>
                 <li className='flex items-center'>
                   <span className='w-4 h-4 mr-3 flex items-center justify-center text-signal-500 font-bold'>
                     @
                   </span>
-                  <span>info@AKtrans-example.de</span>
+                  <a href='mailto:hinundher.de@gmail.com' target='_blank'>
+                    <span>hinundher.de@gmail.com</span>
+                  </a>
                 </li>
               </ul>
             </div>
@@ -467,7 +472,7 @@ export const HomeDe = () => {
           </div>
 
           <div className='border-t border-navy-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500'>
-            <p>&copy; 2024 AKTrans GmbH. Alle Rechte vorbehalten.</p>
+            <p>&copy; 2024 AKUmzüge GmbH. Alle Rechte vorbehalten.</p>
             <div className='flex space-x-6 mt-4 md:mt-0'>
               <a href='#' className='hover:text-white'>
                 Impressum

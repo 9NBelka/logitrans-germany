@@ -92,7 +92,7 @@ export const Navigation = () => {
           <div className='flex justify-between items-center'>
             <div className='flex items-center'>
               <a href='#' className='text-2xl font-extrabold text-white tracking-tighter'>
-                AK<span className='text-signal-500'>TRANS</span>
+                AK<span className='text-signal-500'>Umzüge</span>
               </a>
             </div>
 
