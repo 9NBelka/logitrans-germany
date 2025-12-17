@@ -112,7 +112,7 @@ export const HomeDe = () => {
               Seit 2022 Ihr Partner für Effizienz.
             </h3>
             <p className='text-lg text-gray-600 mb-6 leading-relaxed'>
-              LogiTrans wurde mit einer klaren Vision gegründet: Transportdienstleistungen
+              AKTrans wurde mit einer klaren Vision gegründet: Transportdienstleistungen
               transparenter, schneller und zuverlässiger zu gestalten. Was mit einem einzelnen LKW
               begann, ist heute eine leistungsstarke Flotte, die täglich Waren quer durch
               Deutschland und Europa bewegt.
@@ -224,7 +224,7 @@ export const HomeDe = () => {
       <Section id='why-us' dark>
         <div className='text-center mb-16'>
           <h2 className='text-signal-500 font-bold tracking-wider uppercase mb-2'>
-            Warum LogiTrans?
+            Warum AKTrans?
           </h2>
           <h3 className='text-4xl font-extrabold text-white'>Ihre Vorteile und unsere Garantie</h3>
         </div>
@@ -439,7 +439,7 @@ export const HomeDe = () => {
                   <span className='w-4 h-4 mr-3 flex items-center justify-center text-signal-500 font-bold'>
                     @
                   </span>
-                  <span>info@logitrans-example.de</span>
+                  <span>info@AKtrans-example.de</span>
                 </li>
               </ul>
             </div>
@@ -465,7 +465,7 @@ export const HomeDe = () => {
           </div>
 
           <div className='border-t border-navy-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500'>
-            <p>&copy; 2024 LogiTrans GmbH. Alle Rechte vorbehalten.</p>
+            <p>&copy; 2024 AKTrans GmbH. Alle Rechte vorbehalten.</p>
             <div className='flex space-x-6 mt-4 md:mt-0'>
               <a href='#' className='hover:text-white'>
                 Impressum

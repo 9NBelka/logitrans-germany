@@ -123,9 +123,9 @@ export const HomeUa = () => {
               З 2022 року — ваш партнер з ефективності.
             </h3>
             <p className='text-lg text-gray-600 mb-6 leading-relaxed'>
-              LogiTrans було засновано з чітким баченням: зробити транспортні послуги більш
-              прозорими, швидкими та надійними. Те, що починалося з однієї вантажівки, сьогодні є
-              потужним автопарком, який щодня перевозить товари по всій Німеччині та Європі.
+              AKTrans було засновано з чітким баченням: зробити транспортні послуги більш прозорими,
+              швидкими та надійними. Те, що починалося з однієї вантажівки, сьогодні є потужним
+              автопарком, який щодня перевозить товари по всій Німеччині та Європі.
             </p>
             <p className='text-lg text-gray-600 mb-8 leading-relaxed'>
               Ми зосереджені на середньому бізнесі. Ми розуміємо, що кожна затримка поставки коштує
@@ -233,9 +233,7 @@ export const HomeUa = () => {
       {/* --- Why Us / Value Prop --- */}
       <Section id='why-us' dark>
         <div className='text-center mb-16'>
-          <h2 className='text-signal-500 font-bold tracking-wider uppercase mb-2'>
-            Чому LogiTrans?
-          </h2>
+          <h2 className='text-signal-500 font-bold tracking-wider uppercase mb-2'>Чому AKTrans?</h2>
           <h3 className='text-4xl font-extrabold text-white'>Ваші переваги та наша гарантія</h3>
         </div>
 
@@ -433,7 +431,7 @@ export const HomeUa = () => {
                   <span className='w-4 h-4 mr-3 flex items-center justify-center text-signal-500 font-bold'>
                     @
                   </span>
-                  <span>info@logitrans-example.de</span>
+                  <span>info@AKTrans-example.de</span>
                 </li>
               </ul>
             </div>
@@ -458,7 +456,7 @@ export const HomeUa = () => {
           </div>
 
           <div className='border-t border-navy-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500'>
-            <p>&copy; 2024 LogiTrans GmbH. Усі права захищено.</p>
+            <p>&copy; 2024 AKTrans GmbH. Усі права захищено.</p>
             <div className='flex space-x-6 mt-4 md:mt-0'>
               <a href='#' className='hover:text-white'>
                 Вихідні дані
