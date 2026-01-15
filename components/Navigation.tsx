@@ -92,7 +92,7 @@ export const Navigation = () => {
           <div className='flex justify-between items-center'>
             <div className='flex items-center'>
               <a href='#' className='text-2xl font-extrabold text-white tracking-tighter'>
-                AK<span className='text-signal-500'>Umzüge</span>
+                Kantsedal <span className='text-signal-500'>Artem</span>
               </a>
             </div>
 
@@ -164,12 +164,12 @@ export const Navigation = () => {
                   <button
                     onClick={() => switchLanguage('de')}
                     className='flex items-center text-white hover:text-signal-500'>
-                    <span className='mr-2 text-2xl'>🇩🇪</span> Deutsch
+                    <span className='mr-2 text-2xl'>🇩🇪</span>
                   </button>
                   <button
                     onClick={() => switchLanguage('ua')}
                     className='flex items-center text-white hover:text-signal-500'>
-                    <span className='mr-2 text-2xl'>🇺🇦</span> Українська
+                    <span className='mr-2 text-2xl'>🇺🇦</span>
                   </button>
                 </div>
               </div>

@@ -67,7 +67,7 @@ export const HomeDe = () => {
             </span>
           </h1>
           <p className='text-xl text-gray-200 mb-10 max-w-2xl mx-auto font-light'>
-            Spezialisiert auf Transporte von 3,5 bis 20 Tonnen. Wir optimieren Ihre Lieferkette mit
+            Spezialisiert auf Transporte von 3,5 bis 20 Tonnen. - optimieren Ihre Lieferkette mit
             Präzision und deutscher Zuverlässigkeit.
           </p>
           <div className='flex flex-col sm:flex-row gap-4 justify-center'>
@@ -111,17 +111,17 @@ export const HomeDe = () => {
           <div>
             <h2 className='text-signal-500 font-bold tracking-wider uppercase mb-2'>Über Uns</h2>
             <h3 className='text-4xl font-extrabold text-navy-900 mb-6'>
-              Seit 2022 Ihr Partner für Effizienz.
+              Seit 2022 sind wir Ihr Partner für professionelle (ganzheitliche) Transportlösungen.
             </h3>
             <p className='text-lg text-gray-600 mb-6 leading-relaxed'>
-              AKUmzüge wurde mit einer klaren Vision gegründet: Transportdienstleistungen
+              Kantsedal Artem wurde mit einer klaren Vision gegründet: Transportdienstleistungen
               transparenter, schneller und zuverlässiger zu gestalten. Was mit einem einzelnen LKW
               begann, ist heute eine leistungsstarke Flotte, die täglich Waren quer durch
               Deutschland und Europa bewegt.
             </p>
             <p className='text-lg text-gray-600 mb-8 leading-relaxed'>
-              Unser Fokus liegt auf dem Mittelstand. Wir verstehen, dass jede verspätete Lieferung
-              Geld kostet. Deshalb setzen wir auf modernste Telematik, geschultes Personal und
+              Wir konzentrieren uns auf den Mittelstand. Wir wissen, dass jede Lieferverzögerung
+              Geld kostet. Deshalb setzen wir auf moderne Telematik, qualifiziertes Personal und
               direkte Kommunikation.
             </p>
 
@@ -226,7 +226,7 @@ export const HomeDe = () => {
       <Section id='why-us' dark>
         <div className='text-center mb-16'>
           <h2 className='text-signal-500 font-bold tracking-wider uppercase mb-2'>
-            Warum AKUmzüge?
+            Warum man uns vertraut
           </h2>
           <h3 className='text-4xl font-extrabold text-white'>Ihre Vorteile und unsere Garantie</h3>
         </div>
@@ -238,7 +238,8 @@ export const HomeDe = () => {
             </div>
             <h4 className='text-xl font-bold text-white mb-3'>Transparenz</h4>
             <p className='text-gray-300'>
-              Keine versteckten Kosten. Wir kommunizieren offen und proaktiv bei jedem Schritt.
+              Keine versteckten Kosten. Wir informieren Sie offen über die Kosten und den
+              Arbeitsfortschritt in jeder Phase.
             </p>
           </div>
           <div className='flex flex-col items-center text-center'>
@@ -273,23 +274,46 @@ export const HomeDe = () => {
         <div className='flex flex-col lg:flex-row gap-16'>
           <div className='lg:w-1/2'>
             <h2 className='text-signal-500 font-bold tracking-wider uppercase mb-2'>
-              Logistik-Outsourcing
+              Logistik-Outsourcing für Unternehmen
             </h2>
             <h3 className='text-4xl font-extrabold text-navy-900 mb-6'>
-              Konzentrieren Sie sich auf Ihr Kerngeschäft.
+              Sie konzentrieren sich auf die Produktion — wir übernehmen die gesamte Logistik.
             </h3>
             <p className='text-lg text-gray-600 mb-8'>
-              Lagerhaltung, Kommissionierung und Transportmanagement binden wertvolle Ressourcen.
-              Wir übernehmen Ihre komplette Logistik – effizienter und oft kostengünstiger als eine
-              interne Lösung.
+              Die Unterhaltung einer eigenen Logistikabteilung, eines Fuhrparks und von Personal
+              bedeutet hohe laufende Kosten. Wir bieten vollständiges Logistik-Outsourcing:
+              Lieferung, Transporte, Routenplanung, Kontrolle und Reporting — alles aus einer Hand.
             </p>
 
+            <p className='text-lg text-gray-600'>Mit uns müssen Sie nicht:</p>
             <ul className='space-y-4 mb-8'>
               {[
-                'Keine Fixkosten für eigenen Fuhrpark & Personal',
-                'Skalierbare Lösungen für saisonale Schwankungen',
-                'Professionelle Lagerverwaltung & Bestandsführung',
-                'Nahtlose IT-Integration',
+                'eine eigene Logistikabteilung unterhalten',
+                'Fahrzeuge kaufen und warten',
+                'Fahrer und Disponenten einstellen',
+                'operative Logistikfragen lösen',
+              ].map((item, i) => (
+                <li key={i} className='flex items-center text-navy-900 font-medium mt-2'>
+                  {/* <CheckCircle className='text-signal-500 mr-3 flex-shrink-0' size={20} /> */}•{' '}
+                  {item}
+                </li>
+              ))}
+            </ul>
+
+            <p className='text-lg text-gray-600 mb-8 font-bold'>
+              Sie produzieren das Produkt. Wir sorgen für seine Lieferung.
+            </p>
+
+            <p className='text-lg text-gray-600 mb-4'>
+              Was Sie durch die Zusammenarbeit mit uns erhalten
+            </p>
+            <ul className='space-y-4 mb-8'>
+              {[
+                'Umfassende logistische Betreuung — von der Planung bis zur Lieferung an den Endkunden',
+                'Eigener Fuhrpark — ohne Einbindung externer Transportunternehmen',
+                'Kostensenkung — Sie zahlen nur für die Dienstleistung, nicht für Personal und Technik',
+                'Flexibilität und Skalierbarkeit — einfache Anpassung der Volumen nach Bedarf',
+                'Transparenz — klare Prozesse und regelmäßiges Reporting',
               ].map((item, i) => (
                 <li key={i} className='flex items-center text-navy-900 font-medium'>
                   <CheckCircle className='text-signal-500 mr-3 flex-shrink-0' size={20} />
@@ -301,36 +325,97 @@ export const HomeDe = () => {
             <Button variant='primary' onClick={() => openForm(FormType.LOGISTICS)}>
               Kostenlose Logistik-Analyse
             </Button>
+
+            <p className='text-lg text-gray-600 mb-4 mt-8'>Ergebnis für Ihr Unternehmen</p>
+            <ul className='space-y-4 mb-8'>
+              {[
+                'geringere Kosten',
+                'kein eigener Logistikstab',
+                'planbare Lieferzeiten',
+                'volle Kontrolle ohne operative Einbindung',
+                'mehr Zeit für Entwicklung und Produktion',
+              ].map((item, i) => (
+                <li key={i} className='flex items-center text-navy-900 font-medium '>
+                  <CheckCircle className='text-signal-500 mr-3 flex-shrink-0' size={20} />
+                  {item}
+                </li>
+              ))}
+            </ul>
           </div>
 
           <div className='lg:w-1/2'>
-            <h4 className='text-2xl font-bold text-navy-900 mb-8'>Unser Prozess</h4>
+            <h4 className='text-2xl font-bold text-navy-900 mb-8'>
+              Wie wir mit Unternehmen arbeiten
+            </h4>
             <div className='space-y-8 relative'>
               {/* Vertical line */}
               <div className='absolute left-6 top-4 bottom-4 w-0.5 bg-gray-200'></div>
 
               {[
                 {
-                  title: 'Analyse',
-                  desc: 'Wir prüfen Ihre aktuellen Prozesse und Kostenstrukturen.',
+                  title: 'Wir analysieren Ihr Geschäft',
+                  titleList: 'Wir analysieren::',
+                  list: [
+                    'Produktionsvolumen',
+                    'Art und Häufigkeit der Transporte',
+                    'Liefergeografie',
+                    'aktuelle Logistikkosten',
+                  ],
+                  desc: '👉 Ziel: zu verstehen, wie Logistik kostengünstiger und effizienter gestaltet werden kann.',
                 },
                 {
-                  title: 'Konzept',
-                  desc: 'Entwicklung einer maßgeschneiderten Outsourcing-Strategie.',
+                  title: 'Wir übernehmen die Logistik vollständig',
+                  titleList: 'Wir übernehmen die volle Verantwortung für:',
+                  list: [
+                    'Organisation der Transporte',
+                    'Fuhrparkmanagement',
+                    'Routenplanung',
+                    'Koordination der Fahrer',
+                    'Kontrolle der Liefertermine',
+                  ],
+                  desc: '👉 Sie sind nicht mehr in operative Logistikprozesse eingebunden.',
                 },
                 {
-                  title: 'Organisation',
-                  desc: 'Übernahme der Logistikprozesse und Implementierung.',
+                  title: 'Lieferung mit eigenem Fuhrpark',
+                  titleList: 'Wir nutzen unseren eigenen Fuhrpark, was garantiert:',
+                  list: [
+                    'Stabilität',
+                    'Qualitätskontrolle',
+                    'Termintreue',
+                    'keine „Zwischenhändler“',
+                  ],
+                  desc: '👉 Weniger Risiken — mehr Verantwortung auf unserer Seite.',
                 },
-                { title: 'Ergebnis', desc: 'Laufende Optimierung und Reporting.' },
+                {
+                  title: 'Optimierung und Reporting',
+                  titleList: 'Wir:',
+                  list: [
+                    'optimieren kontinuierlich die Routen',
+                    'senken Kosten',
+                    'erhöhen die Liefergeschwindigkeit',
+                    'liefern transparente und verständliche Berichte',
+                  ],
+                  desc: '👉 Ihre Logistik funktioniert als System — nicht als ständiges „Feuerlöschen“.',
+                },
               ].map((step, idx) => (
                 <div key={idx} className='relative flex items-start'>
                   <div className='flex-shrink-0 w-12 h-12 rounded-full bg-navy-900 text-white flex items-center justify-center font-bold z-10 border-4 border-white shadow-md'>
                     {idx + 1}
                   </div>
+
                   <div className='ml-6 pt-2'>
                     <h5 className='text-lg font-bold text-navy-900'>{step.title}</h5>
-                    <p className='text-gray-600'>{step.desc}</p>
+                    <p className='text-lg text-gray-600 mt-4'>{step.titleList}</p>
+                    <ul className='space-y-4 mb-8'>
+                      {step.list.map((listText, i) => (
+                        <li key={i} className='flex items-center text-navy-900 font-medium mt-2'>
+                          {/* <CheckCircle className='text-signal-500 mr-3 flex-shrink-0' size={20} /> */}
+                          • {''} {listText}
+                        </li>
+                      ))}
+                    </ul>
+
+                    <p className='text-gray-600 '>{step.desc}</p>
                   </div>
                 </div>
               ))}
@@ -378,7 +463,7 @@ export const HomeDe = () => {
               <a
                 href='#'
                 className='text-2xl font-extrabold text-white tracking-tighter mb-6 block'>
-                AK<span className='text-signal-500'>Umzüge</span>
+                <span className='text-signal-500'>Kantsedal Artem</span>
               </a>
               <p className='text-gray-400 text-sm leading-relaxed mb-6'>
                 Ihr zuverlässiger Partner für Transporte und Logistiklösungen in Deutschland und
@@ -472,7 +557,7 @@ export const HomeDe = () => {
           </div>
 
           <div className='border-t border-navy-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500'>
-            <p>&copy; 2024 AKUmzüge GmbH. Alle Rechte vorbehalten.</p>
+            <p>&copy; 2026 Kantsedal Artem GmbH. Alle Rechte vorbehalten.</p>
             <div className='flex space-x-6 mt-4 md:mt-0'>
               <a href='#' className='hover:text-white'>
                 Impressum
