@@ -34,9 +34,21 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
     // TRANSPORT
     from: lang === 'de' ? 'Abgangsort (PLZ/Ort)' : 'Місце відправлення (індекс/місто)',
     to: lang === 'de' ? 'Empfangsort (PLZ/Ort)' : 'Місце призначення (індекс/місто)',
-    weight: lang === 'de' ? 'Gewicht (ca.)' : 'Вага (приблизно)',
+    weight: lang === 'de' ? 'Gewicht (kg)' : 'Вага (кг)',
+    weightPlaceholder: lang === 'de' ? '300' : '300',
+    length: lang === 'de' ? 'Länge (cm)' : 'Довжина (см)',
+    lengthPlaceholder: lang === 'de' ? '120' : '120',
+    width: lang === 'de' ? 'Breite (cm)' : 'Ширина (см)',
+    widthPlaceholder: lang === 'de' ? '80' : '80',
+    height: lang === 'de' ? 'Höhe (cm)' : 'Висота (см)',
+    heightPlaceholder: lang === 'de' ? '100' : '100',
+    quantity: lang === 'de' ? 'Menge' : 'Кількість',
+    quantityPlaceholder: lang === 'de' ? '1' : '1',
     cargoType: lang === 'de' ? 'Art der Ware' : 'Тип вантажу',
-    cargoPlaceholder: lang === 'de' ? 'Paletten, Maschinen...' : 'Палети, техніка...',
+
+    optionTypeOne: lang === 'de' ? 'Euro pallet' : 'Європалет',
+    optionTypeTwo: lang === 'de' ? 'Pallets' : 'Палети',
+    optionTypeThree: lang === 'de' ? 'Boxes' : 'Коробки',
 
     // LOGISTICS
     challenge: lang === 'de' ? 'Aktuelle Herausforderung' : 'Поточні виклики',
@@ -87,20 +99,53 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
             </div>
             <div className='grid grid-cols-2 gap-4 mb-4'>
               <div>
-                <label className='block text-sm font-bold text-gray-700 mb-1'>{t.weight}</label>
+                <label className='block text-sm font-bold text-gray-700 mb-1'>{t.cargoType}</label>
                 <select className='w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-navy-900'>
-                  <option>3,5t - 7,5t</option>
-                  <option>7,5t - 12t</option>
-                  <option>12t - 20t</option>
+                  <option>{t.optionTypeOne}</option>
+                  <option>{t.optionTypeTwo}</option>
+                  <option>{t.optionTypeThree}</option>
                   <option>{lang === 'de' ? 'Weiß nicht genau' : 'Не знаю точно'}</option>
                 </select>
               </div>
               <div>
-                <label className='block text-sm font-bold text-gray-700 mb-1'>{t.cargoType}</label>
+                <label className='block text-sm font-bold text-gray-700 mb-1'>{t.quantity}</label>
                 <input
                   type='text'
                   className='w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-navy-900'
-                  placeholder={t.cargoPlaceholder}
+                  placeholder={t.quantityPlaceholder}
+                />
+              </div>
+
+              <div>
+                <label className='block text-sm font-bold text-gray-700 mb-1'>{t.length}</label>
+                <input
+                  type='text'
+                  className='w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-navy-900'
+                  placeholder={t.lengthPlaceholder}
+                />
+              </div>
+              <div>
+                <label className='block text-sm font-bold text-gray-700 mb-1'>{t.width}</label>
+                <input
+                  type='text'
+                  className='w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-navy-900'
+                  placeholder={t.widthPlaceholder}
+                />
+              </div>
+              <div>
+                <label className='block text-sm font-bold text-gray-700 mb-1'>{t.height}</label>
+                <input
+                  type='text'
+                  className='w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-navy-900'
+                  placeholder={t.heightPlaceholder}
+                />
+              </div>
+              <div>
+                <label className='block text-sm font-bold text-gray-700 mb-1'>{t.weight}</label>
+                <input
+                  type='text'
+                  className='w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-navy-900'
+                  placeholder={t.weightPlaceholder}
                 />
               </div>
             </div>
