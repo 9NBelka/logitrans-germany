@@ -4,7 +4,7 @@ import { FormType } from '../types';
 import { Button } from './Button';
 import { useLanguage } from '../context/LanguageContext';
 
-const N8N_WEBHOOK_URL = 'https://workflow.crmmech.com/webhook/76e67ce4-1807-46ef-868c-dcfc1c279782';
+const N8N_WEBHOOK_URL = 'https://workflow.crmmech.com/webhook-test/76e67ce4-1807-46ef-868c-dcfc1c279782';
 
 interface LeadFormProps {
   type: FormType;
