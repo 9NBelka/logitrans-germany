@@ -4,6 +4,8 @@ import { FormType } from '../types';
 import { Button } from './Button';
 import { useLanguage } from '../context/LanguageContext';
 
+const N8N_WEBHOOK_URL = 'https://workflow.crmmech.com/webhook/76e67ce4-1807-46ef-868c-dcfc1c279782';
+
 interface LeadFormProps {
   type: FormType;
   onSuccess: () => void;
@@ -13,6 +15,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
   const { lang } = useLanguage();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isUrgent, setIsUrgent] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const t = {
     firstName: lang === 'de' ? 'Vorname' : 'Імʼя',
@@ -93,14 +96,68 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
     areaPlaceholder: lang === 'de' ? 'z.B. 85' : 'наприклад, 85',
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
+    setError(null);
+
+    const fd = new FormData(e.currentTarget);
+
+    const payload: Record<string, unknown> = {
+      formType: type,
+      lang,
+      firstName: fd.get('firstName'),
+      company: fd.get('company'),
+      email: fd.get('email'),
+      phone: fd.get('phone'),
+    };
+
+    if (type === FormType.TRANSPORT) {
+      Object.assign(payload, {
+        from: fd.get('from'),
+        to: fd.get('to'),
+        vehicleType: fd.get('vehicleType'),
+        cargoType: fd.get('cargoType'),
+        quantity: fd.get('quantity'),
+        length: fd.get('length'),
+        width: fd.get('width'),
+        height: fd.get('height'),
+        weight: fd.get('weight'),
+        loadingDate: fd.get('loadingDate'),
+        loadingTime: fd.get('loadingTime'),
+        urgentDelivery: isUrgent,
+        comments: fd.get('comments'),
+      });
+    } else if (type === FormType.LOGISTICS) {
+      payload.challenge = fd.get('challenge');
+    } else if (type === FormType.MOVING) {
+      Object.assign(payload, {
+        fromZip: fd.get('fromZip'),
+        toZip: fd.get('toZip'),
+        area: fd.get('area'),
+      });
+    }
+
+    try {
+      const res = await fetch(N8N_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
       onSuccess();
       alert(t.successMessage);
-    }, 1500);
+    } catch {
+      setError(
+        lang === 'de'
+          ? 'Fehler beim Senden. Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt.'
+          : 'Помилка при відправці. Спробуйте ще раз або зверніться до нас напряму.',
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const renderSpecificFields = () => {
@@ -112,6 +169,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
               <label className='block text-sm font-bold text-gray-700 mb-1'>{t.from}</label>
               <input
                 required
+                name='from'
                 type='text'
                 className='w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-navy-900'
                 placeholder='z.B. 10115 Berlin'
@@ -121,6 +179,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
               <label className='block text-sm font-bold text-gray-700 mb-1'>{t.to}</label>
               <input
                 required
+                name='to'
                 type='text'
                 className='w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-navy-900'
                 placeholder='z.B. 80331 München'
@@ -132,6 +191,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
               <label className='block text-sm font-bold text-gray-700 mb-1'>{t.vehicleType}</label>
               <select
                 required
+                name='vehicleType'
                 className='w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-navy-900'
               >
                 <option value=''>{lang === 'de' ? 'Bitte wählen' : 'Оберіть тип'}</option>
@@ -146,16 +206,17 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
             <div className='grid grid-cols-2 gap-4 mb-4'>
               <div>
                 <label className='block text-sm font-bold text-gray-700 mb-1'>{t.cargoType}</label>
-                <select className='w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-navy-900'>
-                  <option>{t.optionTypeOne}</option>
-                  <option>{t.optionTypeTwo}</option>
-                  <option>{t.optionTypeThree}</option>
-                  <option>{lang === 'de' ? 'Weiß nicht genau' : 'Не знаю точно'}</option>
+                <select name='cargoType' className='w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-navy-900'>
+                  <option value='euro-pallet'>{t.optionTypeOne}</option>
+                  <option value='pallets'>{t.optionTypeTwo}</option>
+                  <option value='boxes'>{t.optionTypeThree}</option>
+                  <option value='unknown'>{lang === 'de' ? 'Weiß nicht genau' : 'Не знаю точно'}</option>
                 </select>
               </div>
               <div>
                 <label className='block text-sm font-bold text-gray-700 mb-1'>{t.quantity}</label>
                 <input
+                  name='quantity'
                   type='text'
                   className='w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-navy-900'
                   placeholder={t.quantityPlaceholder}
@@ -165,6 +226,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
               <div>
                 <label className='block text-sm font-bold text-gray-700 mb-1'>{t.length}</label>
                 <input
+                  name='length'
                   type='text'
                   className='w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-navy-900'
                   placeholder={t.lengthPlaceholder}
@@ -173,6 +235,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
               <div>
                 <label className='block text-sm font-bold text-gray-700 mb-1'>{t.width}</label>
                 <input
+                  name='width'
                   type='text'
                   className='w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-navy-900'
                   placeholder={t.widthPlaceholder}
@@ -181,6 +244,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
               <div>
                 <label className='block text-sm font-bold text-gray-700 mb-1'>{t.height}</label>
                 <input
+                  name='height'
                   type='text'
                   className='w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-navy-900'
                   placeholder={t.heightPlaceholder}
@@ -189,6 +253,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
               <div>
                 <label className='block text-sm font-bold text-gray-700 mb-1'>{t.weight}</label>
                 <input
+                  name='weight'
                   type='text'
                   className='w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-navy-900'
                   placeholder={t.weightPlaceholder}
@@ -201,13 +266,14 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
               <div>
                 <label className='block text-sm font-bold text-gray-700 mb-1'>{t.loadingDate}</label>
                 <input
+                  name='loadingDate'
                   type='date'
                   className='w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-navy-900'
                 />
               </div>
               <div>
                 <label className='block text-sm font-bold text-gray-700 mb-1'>{t.loadingTime}</label>
-                <select className='w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-navy-900'>
+                <select name='loadingTime' className='w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-navy-900'>
                   <option value=''>{t.loadingTimePlaceholder}</option>
                   <option value='6-9'>{t.timeSlot1}</option>
                   <option value='9-12'>{t.timeSlot2}</option>
@@ -236,6 +302,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
             <div className='mb-2'>
               <label className='block text-sm font-bold text-gray-700 mb-1'>{t.comments}</label>
               <textarea
+                name='comments'
                 rows={3}
                 className='w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-navy-900 resize-none'
                 placeholder={t.commentsPlaceholder}
@@ -250,6 +317,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
             <label className='block text-sm font-bold text-gray-700 mb-1'>{t.challenge}</label>
             <textarea
               required
+              name='challenge'
               rows={3}
               className='w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-navy-900'
               placeholder={t.challengePlaceholder}
@@ -265,6 +333,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
                 <label className='block text-sm font-bold text-gray-700 mb-1'>{t.fromZip}</label>
                 <input
                   required
+                  name='fromZip'
                   type='text'
                   className='w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-navy-900'
                 />
@@ -273,6 +342,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
                 <label className='block text-sm font-bold text-gray-700 mb-1'>{t.toZip}</label>
                 <input
                   required
+                  name='toZip'
                   type='text'
                   className='w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-navy-900'
                 />
@@ -282,6 +352,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
               <label className='block text-sm font-bold text-gray-700 mb-1'>{t.area}</label>
               <input
                 required
+                name='area'
                 type='number'
                 className='w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-navy-900'
                 placeholder={t.areaPlaceholder}
@@ -302,6 +373,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
         <label className='block text-sm font-bold text-gray-700 mb-1'>{t.firstName}</label>
         <input
           required
+          name='firstName'
           type='text'
           className='w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-navy-900'
         />
@@ -310,6 +382,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
       <div className='mb-4'>
         <label className='block text-sm font-bold text-gray-700 mb-1'>{t.company}</label>
         <input
+          name='company'
           type='text'
           className='w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-navy-900'
         />
@@ -319,6 +392,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
         <label className='block text-sm font-bold text-gray-700 mb-1'>{t.email}</label>
         <input
           required
+          name='email'
           type='email'
           className='w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-navy-900'
         />
@@ -328,6 +402,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
         <label className='block text-sm font-bold text-gray-700 mb-1'>{t.phone}</label>
         <input
           required
+          name='phone'
           type='tel'
           className='w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-navy-900'
         />
@@ -342,6 +417,11 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
       </div>
 
       <div className='mt-6'>
+        {error && (
+          <div className='mb-3 px-4 py-3 rounded bg-red-50 border border-red-200 text-red-700 text-sm'>
+            {error}
+          </div>
+        )}
         <Button type='submit' variant='primary' fullWidth disabled={isSubmitting}>
           {isSubmitting ? t.submitting : t.submit}
         </Button>
