@@ -4,7 +4,7 @@ import { FormType } from '../types';
 import { Button } from './Button';
 import { useLanguage } from '../context/LanguageContext';
 
-const N8N_WEBHOOK_URL = 'https://workflow.crmmech.com/webhook-test/76e67ce4-1807-46ef-868c-dcfc1c279782';
+const N8N_WEBHOOK_URL = 'https://workflow.crmmech.com/webhook/76e67ce4-1807-46ef-868c-dcfc1c279782';
 
 interface LeadFormProps {
   type: FormType;
@@ -16,6 +16,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isUrgent, setIsUrgent] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
 
   const t = {
     firstName: lang === 'de' ? 'Vorname' : 'Імʼя',
@@ -100,6 +101,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
     e.preventDefault();
     setIsSubmitting(true);
     setError(null);
+    setSuccess(false);
 
     const fd = new FormData(e.currentTarget);
 
@@ -147,8 +149,8 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
 
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
+      setSuccess(true);
       onSuccess();
-      alert(t.successMessage);
     } catch {
       setError(
         lang === 'de'
@@ -417,6 +419,13 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
       </div>
 
       <div className='mt-6'>
+        {success && (
+          <div className='mb-3 px-4 py-3 rounded bg-green-50 border border-green-200 text-green-700 text-sm'>
+            {lang === 'de'
+              ? 'Ihre Anfrage wurde angenommen. Unser Manager wird sich in Kürze bei Ihnen melden.'
+              : 'Вашу заявку прийнято. Наш менеджер зв'яжеться з вами найближчим часом.'}
+          </div>
+        )}
         {error && (
           <div className='mb-3 px-4 py-3 rounded bg-red-50 border border-red-200 text-red-700 text-sm'>
             {error}
