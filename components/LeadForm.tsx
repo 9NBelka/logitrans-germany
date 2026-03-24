@@ -423,7 +423,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
           <div className='mb-3 px-4 py-3 rounded bg-green-50 border border-green-200 text-green-700 text-sm'>
             {lang === 'de'
               ? 'Ihre Anfrage wurde angenommen. Unser Manager wird sich in Kürze bei Ihnen melden.'
-              : 'Вашу заявку прийнято. Наш менеджер зв'яжеться з вами найближчим часом.'}
+              : "Вашу заявку прийнято. Наш менеджер зв'яжеться з вами найближчим часом."}
           </div>
         )}
         {error && (
