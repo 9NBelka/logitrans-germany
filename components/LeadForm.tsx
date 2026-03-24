@@ -12,10 +12,10 @@ interface LeadFormProps {
 export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
   const { lang } = useLanguage();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isUrgent, setIsUrgent] = useState(false);
 
   const t = {
     firstName: lang === 'de' ? 'Vorname' : 'Імʼя',
-    lastName: lang === 'de' ? 'Nachname' : 'Прізвище',
     company: lang === 'de' ? 'Firma (Optional)' : 'Компанія (необовʼязково)',
     email: lang === 'de' ? 'E-Mail Adresse' : 'Електронна пошта',
     phone: lang === 'de' ? 'Telefonnummer' : 'Номер телефону',
@@ -49,6 +49,35 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
     optionTypeOne: lang === 'de' ? 'Euro pallet' : 'Європалет',
     optionTypeTwo: lang === 'de' ? 'Pallets' : 'Палети',
     optionTypeThree: lang === 'de' ? 'Boxes' : 'Коробки',
+
+    // Vehicle type
+    vehicleType: lang === 'de' ? 'Fahrzeugtyp' : 'Тип транспорту',
+    vehicleUp35: lang === 'de' ? 'Fahrzeug bis 3,5 t' : 'Авто до 3,5 т',
+    vehicleTent: lang === 'de' ? 'Plane (Tautliner)' : 'Тент',
+    vehicleRefer: lang === 'de' ? 'Kühlfahrzeug (Reefer)' : 'Рефрижератор',
+    vehiclePlatform: lang === 'de' ? 'Pritsche (Flatbed)' : 'Платформа',
+    vehicleOther: lang === 'de' ? 'Andere' : 'Інший варіант',
+
+    // Loading date/time
+    loadingDate: lang === 'de' ? 'Ladedatum (optional)' : 'Дата завантаження (необовʼязково)',
+    loadingTime: lang === 'de' ? 'Ladezeit (optional)' : 'Час завантаження (необовʼязково)',
+    loadingTimePlaceholder: lang === 'de' ? 'Bitte wählen' : 'Оберіть діапазон',
+    timeSlot1: '6:00–9:00',
+    timeSlot2: '9:00–12:00',
+    timeSlot3: '12:00–16:00',
+    timeSlot4: '16:00–20:00',
+    timeSlot5: '20:00–23:00',
+    timeSlotFlexible: lang === 'de' ? 'Flexible Zeit' : 'Гнучкий час',
+
+    // Urgent
+    urgentDelivery: lang === 'de' ? 'Eilsendung (Priorität)' : 'Термінова доставка (пріоритет)',
+
+    // Comments
+    comments: lang === 'de' ? 'Kommentare (optional)' : 'Коментарі (необовʼязково)',
+    commentsPlaceholder:
+      lang === 'de'
+        ? 'Zusätzliche Informationen zur Sendung oder zur Ware (z.B. Liefertermin, Be-/Entladeart, Besonderheiten des Lagers usw.)'
+        : 'Додаткова інформація про перевезення або вантаж (наприклад: бажані терміни доставки, тип завантаження, особливості складу тощо)',
 
     // LOGISTICS
     challenge: lang === 'de' ? 'Aktuelle Herausforderung' : 'Поточні виклики',
@@ -97,6 +126,23 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
                 placeholder='z.B. 80331 München'
               />
             </div>
+
+            {/* Vehicle type */}
+            <div className='mb-4'>
+              <label className='block text-sm font-bold text-gray-700 mb-1'>{t.vehicleType}</label>
+              <select
+                required
+                className='w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-navy-900'
+              >
+                <option value=''>{lang === 'de' ? 'Bitte wählen' : 'Оберіть тип'}</option>
+                <option value='up35'>{t.vehicleUp35}</option>
+                <option value='tent'>{t.vehicleTent}</option>
+                <option value='refer'>{t.vehicleRefer}</option>
+                <option value='platform'>{t.vehiclePlatform}</option>
+                <option value='other'>{t.vehicleOther}</option>
+              </select>
+            </div>
+
             <div className='grid grid-cols-2 gap-4 mb-4'>
               <div>
                 <label className='block text-sm font-bold text-gray-700 mb-1'>{t.cargoType}</label>
@@ -149,6 +195,52 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
                 />
               </div>
             </div>
+
+            {/* Loading date & time */}
+            <div className='grid grid-cols-2 gap-4 mb-4'>
+              <div>
+                <label className='block text-sm font-bold text-gray-700 mb-1'>{t.loadingDate}</label>
+                <input
+                  type='date'
+                  className='w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-navy-900'
+                />
+              </div>
+              <div>
+                <label className='block text-sm font-bold text-gray-700 mb-1'>{t.loadingTime}</label>
+                <select className='w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-navy-900'>
+                  <option value=''>{t.loadingTimePlaceholder}</option>
+                  <option value='6-9'>{t.timeSlot1}</option>
+                  <option value='9-12'>{t.timeSlot2}</option>
+                  <option value='12-16'>{t.timeSlot3}</option>
+                  <option value='16-20'>{t.timeSlot4}</option>
+                  <option value='20-23'>{t.timeSlot5}</option>
+                  <option value='flexible'>{t.timeSlotFlexible}</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Urgent delivery checkbox */}
+            <div className='mb-4'>
+              <label className='flex items-center gap-2 cursor-pointer select-none'>
+                <input
+                  type='checkbox'
+                  checked={isUrgent}
+                  onChange={(e) => setIsUrgent(e.target.checked)}
+                  className='w-4 h-4 accent-navy-900'
+                />
+                <span className='text-sm font-bold text-gray-700'>{t.urgentDelivery}</span>
+              </label>
+            </div>
+
+            {/* Comments */}
+            <div className='mb-2'>
+              <label className='block text-sm font-bold text-gray-700 mb-1'>{t.comments}</label>
+              <textarea
+                rows={3}
+                className='w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-navy-900 resize-none'
+                placeholder={t.commentsPlaceholder}
+              />
+            </div>
           </>
         );
 
@@ -160,7 +252,8 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
               required
               rows={3}
               className='w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-navy-900'
-              placeholder={t.challengePlaceholder}></textarea>
+              placeholder={t.challengePlaceholder}
+            />
           </div>
         );
 
@@ -204,23 +297,14 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className='grid grid-cols-2 gap-4 mb-4'>
-        <div>
-          <label className='block text-sm font-bold text-gray-700 mb-1'>{t.firstName}</label>
-          <input
-            required
-            type='text'
-            className='w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-navy-900'
-          />
-        </div>
-        <div>
-          <label className='block text-sm font-bold text-gray-700 mb-1'>{t.lastName}</label>
-          <input
-            required
-            type='text'
-            className='w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-navy-900'
-          />
-        </div>
+      {/* firstName only — lastName removed per client request */}
+      <div className='mb-4'>
+        <label className='block text-sm font-bold text-gray-700 mb-1'>{t.firstName}</label>
+        <input
+          required
+          type='text'
+          className='w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-navy-900'
+        />
       </div>
 
       <div className='mb-4'>
