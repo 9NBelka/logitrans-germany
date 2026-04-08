@@ -1,10 +1,32 @@
 // components/LeadForm.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FormType } from '../types';
 import { Button } from './Button';
 import { useLanguage } from '../context/LanguageContext';
 
 const N8N_WEBHOOK_URL = 'https://workflow.crmmech.com/webhook/76e67ce4-1807-46ef-868c-dcfc1c279782';
+const GOOGLE_MAPS_API_KEY = 'AIzaSyAvfDyEUOjnJSRgyXbDfvXQ7HhVSZEoAgI';
+
+// Загружаем Google Maps SDK один раз
+function loadGoogleMapsScript(): Promise<void> {
+  return new Promise((resolve) => {
+    if (window.google?.maps?.places) {
+      resolve();
+      return;
+    }
+    const existing = document.getElementById('google-maps-script');
+    if (existing) {
+      existing.addEventListener('load', () => resolve());
+      return;
+    }
+    const script = document.createElement('script');
+    script.id = 'google-maps-script';
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places`;
+    script.async = true;
+    script.onload = () => resolve();
+    document.head.appendChild(script);
+  });
+}
 
 interface LeadFormProps {
   type: FormType;
@@ -17,6 +39,41 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
   const [isUrgent, setIsUrgent] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+
+  const fromRef = useRef<HTMLInputElement>(null);
+  const toRef = useRef<HTMLInputElement>(null);
+
+  // Инициализируем Google Places Autocomplete для полей from/to
+  useEffect(() => {
+    if (type !== FormType.TRANSPORT) return;
+
+    loadGoogleMapsScript().then(() => {
+      const options: google.maps.places.AutocompleteOptions = {
+        types: ['(regions)'],
+        fields: ['formatted_address', 'name'],
+      };
+
+      if (fromRef.current) {
+        const acFrom = new window.google.maps.places.Autocomplete(fromRef.current, options);
+        acFrom.addListener('place_changed', () => {
+          const place = acFrom.getPlace();
+          if (fromRef.current) {
+            fromRef.current.value = place.formatted_address || place.name || '';
+          }
+        });
+      }
+
+      if (toRef.current) {
+        const acTo = new window.google.maps.places.Autocomplete(toRef.current, options);
+        acTo.addListener('place_changed', () => {
+          const place = acTo.getPlace();
+          if (toRef.current) {
+            toRef.current.value = place.formatted_address || place.name || '';
+          }
+        });
+      }
+    });
+  }, [type]);
 
   const t = {
     firstName: lang === 'de' ? 'Vorname' : 'Імʼя',
@@ -171,6 +228,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
               <label className='block text-sm font-bold text-gray-700 mb-1'>{t.from}</label>
               <input
                 required
+                ref={fromRef}
                 name='from'
                 type='text'
                 className='w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-navy-900'
@@ -181,6 +239,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
               <label className='block text-sm font-bold text-gray-700 mb-1'>{t.to}</label>
               <input
                 required
+                ref={toRef}
                 name='to'
                 type='text'
                 className='w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-navy-900'
