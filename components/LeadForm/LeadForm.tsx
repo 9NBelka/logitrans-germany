@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FormType } from '../../types';
 import { Button } from '../Button/Button';
 import { useLanguage } from '../../context/LanguageContext';
-import styles from './LeadForm.module.scss';
+import styles from './Leadform.module.scss';
 
 interface LeadFormProps {
   type: FormType;
