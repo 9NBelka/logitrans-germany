@@ -1,83 +1,55 @@
 import React, { useState, useEffect } from 'react';
-import { Section } from '../components/Section';
-import { Button } from '../components/Button';
-import { Modal } from '../components/Modal';
-import { LeadForm } from '../components/LeadForm';
+import { Section } from '../components/Section/Section';
+import { Button } from '../components/Button/Button';
+import { Modal } from '../components/Modal/Modal';
+import { LeadForm } from '../components/LeadForm/LeadForm';
 import { FormType } from '../types';
 import {
   Truck,
   MapPin,
   ShieldCheck,
   Clock,
-  BarChart3,
   Package,
   TrendingUp,
   Users,
   Phone,
-  Menu,
-  X,
   ChevronRight,
   CheckCircle,
   ArrowRight,
 } from 'lucide-react';
+import s from '../src/styles/Home.module.scss';
 
 export const HomeDe = () => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeForm, setActiveForm] = useState<FormType | null>(null);
-  const [scrolled, setScrolled] = useState(false);
-
-  // Scroll handler for navbar styling
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const openForm = (type: FormType) => setActiveForm(type);
   const closeForm = () => setActiveForm(null);
-  // Здесь вставляешь ВЕСЬ контент из твоего оригинального return (от Hero до footer), кроме <nav>
-  // То есть начиная с Hero Section и до конца, включая модалки (но модалки теперь в Navigation)
 
   return (
-    <div className='min-h-screen bg-gray-50 font-sans text-slate-800'>
-      {/* --- Hero Section --- */}
-
-      {/* --- Hero Section --- */}
-      <div className='relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden'>
-        {/* Background Image with Overlay */}
-        <div className='absolute inset-0 z-0'>
+    <div>
+      {/* ===== HERO ===== */}
+      <div className={s.hero}>
+        <div className={s.heroBg}>
           <img
             src='https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80'
             alt='Logistics Truck on Road'
-            className='w-full h-full object-cover'
           />
-          <div className='absolute inset-0 bg-navy-900 bg-opacity-70'></div>
+          <div className={s.heroOverlay} />
         </div>
 
-        <div className='relative z-10 text-center px-4 max-w-4xl mx-auto mt-16'>
-          <span className='inline-block py-1 px-3 rounded-full bg-signal-500 bg-opacity-20 border border-signal-500 text-signal-500 font-bold mb-6 backdrop-blur-sm animate-fade-in-up'>
-            ZUVERLÄSSIG. EUROPAWEIT. SCHNELL.
-          </span>
-          <h1 className='text-4xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight mb-6'>
-            Ihre Logistik. <br />
-            <span className='text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-300'>
-              Unsere Verantwortung.
-            </span>
+        <div className={s.heroContent}>
+          <span className={s.heroBadge}>ZUVERLÄSSIG. EUROPAWEIT. SCHNELL.</span>
+          <h1 className={s.heroTitle}>
+            Ihre Logistik. <span className={s.heroTitleGradient}>Unsere Verantwortung.</span>
           </h1>
-          <p className='text-xl text-gray-200 mb-10 max-w-2xl mx-auto font-light'>
-            Spezialisiert auf Transporte von 3,5 bis 20 Tonnen. - optimieren Ihre Lieferkette mit
+          <p className={s.heroSubtitle}>
+            Spezialisiert auf Transporte von 3,5 bis 20 Tonnen — optimieren Ihre Lieferkette mit
             Präzision und deutscher Zuverlässigkeit.
           </p>
-          <div className='flex flex-col sm:flex-row gap-4 justify-center'>
-            <Button
-              variant='primary'
-              size='lg'
-              onClick={() => openForm(FormType.TRANSPORT)}
-              className='group'>
+          <div className={s.heroCta}>
+            <Button variant='primary' size='lg' onClick={() => openForm(FormType.TRANSPORT)}>
               Kostenlose Kalkulation
-              <ArrowRight className='ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform' />
+              <ArrowRight style={{ marginLeft: 8, width: 20, height: 20 }} />
             </Button>
             <Button
               variant='outline'
@@ -90,97 +62,91 @@ export const HomeDe = () => {
           </div>
         </div>
 
-        {/* Scroll Indicator */}
-        <div className='absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce text-white opacity-70'>
-          <a href='#about'>
-            <svg className='w-6 h-6' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                strokeWidth={2}
-                d='M19 14l-7 7m0 0l-7-7m7 7V3'
-              />
-            </svg>
-          </a>
-        </div>
+        <a href='#about' className={s.scrollIndicator}>
+          <svg fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+            <path
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              strokeWidth={2}
+              d='M19 14l-7 7m0 0l-7-7m7 7V3'
+            />
+          </svg>
+        </a>
       </div>
 
-      {/* --- About Section --- */}
+      {/* ===== ABOUT ===== */}
       <Section id='about'>
-        <div className='grid md:grid-cols-2 gap-12 items-center'>
+        <div className={s.aboutGrid}>
           <div>
-            <h2 className='text-signal-500 font-bold tracking-wider uppercase mb-2'>Über Uns</h2>
-            <h3 className='text-4xl font-extrabold text-navy-900 mb-6'>
-              Seit 2022 sind wir Ihr Partner für professionelle (ganzheitliche) Transportlösungen.
+            <p className={s.sectionLabel}>Über Uns</p>
+            <h3 className={s.sectionTitle}>
+              Seit 2022 sind wir Ihr Partner für <span>professionelle</span> Transportlösungen.
             </h3>
-            <p className='text-lg text-gray-600 mb-6 leading-relaxed'>
+            <p className={s.bodyText}>
               Kantsedal Artem wurde mit einer klaren Vision gegründet: Transportdienstleistungen
               transparenter, schneller und zuverlässiger zu gestalten. Was mit einem einzelnen LKW
               begann, ist heute eine leistungsstarke Flotte, die täglich Waren quer durch
               Deutschland und Europa bewegt.
             </p>
-            <p className='text-lg text-gray-600 mb-8 leading-relaxed'>
+            <p className={s.bodyText}>
               Wir konzentrieren uns auf den Mittelstand. Wir wissen, dass jede Lieferverzögerung
               Geld kostet. Deshalb setzen wir auf moderne Telematik, qualifiziertes Personal und
               direkte Kommunikation.
             </p>
 
-            <div className='grid grid-cols-2 gap-6'>
-              <div className='flex items-start'>
-                <div className='bg-navy-50 p-3 rounded-lg mr-4 text-navy-900'>
-                  <Truck size={24} />
+            <div className={s.featureGrid}>
+              <div className={s.featureItem}>
+                <div className={s.featureIcon}>
+                  <Truck size={22} />
                 </div>
                 <div>
-                  <h4 className='font-bold text-navy-900'>Moderne Flotte</h4>
-                  <p className='text-sm text-gray-500'>Euro 6 Standard</p>
+                  <div className={s.featureLabel}>Moderne Flotte</div>
+                  <div className={s.featureSub}>Euro 6 Standard</div>
                 </div>
               </div>
-              <div className='flex items-start'>
-                <div className='bg-navy-50 p-3 rounded-lg mr-4 text-navy-900'>
-                  <MapPin size={24} />
+              <div className={s.featureItem}>
+                <div className={s.featureIcon}>
+                  <MapPin size={22} />
                 </div>
                 <div>
-                  <h4 className='font-bold text-navy-900'>Europaweit</h4>
-                  <p className='text-sm text-gray-500'>Grenzenlose Logistik</p>
+                  <div className={s.featureLabel}>Europaweit</div>
+                  <div className={s.featureSub}>Grenzenlose Logistik</div>
                 </div>
               </div>
             </div>
           </div>
-          <div className='relative'>
-            <div className='absolute -inset-4 bg-signal-500 rounded-lg opacity-20 transform rotate-3'></div>
+
+          <div className={s.imageBlock}>
+            <div className={s.imageTilt} />
             <img
               src='/images/screen-two.jpg'
               alt='Professional Logistics Team'
-              className='relative rounded-lg shadow-2xl w-full h-auto object-cover'
+              className={s.mainImage}
             />
-            <div className='absolute bottom-6 left-6 bg-white p-6 rounded-lg shadow-lg max-w-xs hidden lg:block'>
-              <div className='flex items-center gap-3 mb-2'>
-                <div className='w-3 h-3 bg-green-500 rounded-full animate-pulse'></div>
-                <span className='text-sm font-bold text-gray-600'>Live Status</span>
+            <div className={s.liveCard}>
+              <div className={s.liveCardHeader}>
+                <div className={s.liveDot} />
+                <span className={s.liveLabel}>Live Status</span>
               </div>
-              <p className='font-bold text-navy-900 text-lg'>98.9% Pünktlichkeit</p>
-              <p className='text-xs text-gray-500'>im letzten Quartal</p>
+              <p className={s.liveValue}>98.9% Pünktlichkeit</p>
+              <p className={s.liveSub}>im letzten Quartal</p>
             </div>
           </div>
         </div>
       </Section>
 
-      {/* --- Transport Services --- */}
-      <Section id='transport' className='bg-gray-100'>
-        <div className='text-center max-w-3xl mx-auto mb-16'>
-          <h2 className='text-signal-500 font-bold tracking-wider uppercase mb-2'>
-            Transportdienstleistungen
-          </h2>
-          <h3 className='text-4xl font-extrabold text-navy-900 mb-4'>
-            Sicher. Pünktlich. Individuell.
-          </h3>
-          <p className='text-gray-600'>
+      {/* ===== TRANSPORT ===== */}
+      <Section id='transport' gray>
+        <div className={s.sectionHeader}>
+          <p className={s.sectionLabel}>Transportdienstleistungen</p>
+          <h3 className={s.sectionTitle}>Sicher. Pünktlich. Individuell.</h3>
+          <p className={s.sectionDesc}>
             Ob Stückgut, Komplettladung oder Eiltransport – wir haben das passende Fahrzeug für Ihre
             Fracht von 3,5t bis 20t.
           </p>
         </div>
 
-        <div className='grid md:grid-cols-2 lg:grid-cols-4 gap-8'>
+        <div className={s.cardsGrid}>
           {[
             {
               icon: Truck,
@@ -202,112 +168,102 @@ export const HomeDe = () => {
               title: 'Just-in-Time',
               desc: 'Präzise Terminplanung für produktionskritische Lieferungen.',
             },
-          ].map((feature, idx) => (
-            <div
-              key={idx}
-              className='bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border-t-4 border-transparent hover:border-signal-500 group'>
-              <div className='mb-6 inline-block p-4 bg-navy-50 rounded-full group-hover:bg-signal-500 group-hover:text-white transition-colors duration-300 text-navy-900'>
-                <feature.icon size={32} />
+          ].map((f, i) => (
+            <div key={i} className={s.card}>
+              <div className={s.cardIcon}>
+                <f.icon size={30} />
               </div>
-              <h4 className='text-xl font-bold text-navy-900 mb-3'>{feature.title}</h4>
-              <p className='text-gray-600 text-sm leading-relaxed'>{feature.desc}</p>
+              <h4 className={s.cardTitle}>{f.title}</h4>
+              <p className={s.cardDesc}>{f.desc}</p>
             </div>
           ))}
         </div>
 
-        <div className='mt-16 text-center'>
+        <div className={s.sectionCta}>
           <Button onClick={() => openForm(FormType.TRANSPORT)}>
             Jetzt Frachtpreis kalkulieren
           </Button>
         </div>
       </Section>
 
-      {/* --- Why Us / Value Prop --- */}
+      {/* ===== WHY US ===== */}
       <Section id='why-us' dark>
-        <div className='text-center mb-16'>
-          <h2 className='text-signal-500 font-bold tracking-wider uppercase mb-2'>
-            Warum man uns vertraut
-          </h2>
-          <h3 className='text-4xl font-extrabold text-white'>Ihre Vorteile und unsere Garantie</h3>
+        <div className={s.sectionHeader}>
+          <p className={s.sectionLabel}>Warum man uns vertraut</p>
+          <h3 className={`${s.sectionTitle} ${s.sectionTitleWhite}`}>
+            Ihre Vorteile und unsere Garantie
+          </h3>
         </div>
 
-        <div className='grid md:grid-cols-3 gap-10'>
-          <div className='flex flex-col items-center text-center'>
-            <div className='bg-white/10 p-6 rounded-full mb-6 backdrop-blur-sm'>
-              <TrendingUp size={40} className='text-signal-500' />
+        <div className={s.whyGrid}>
+          {[
+            {
+              icon: TrendingUp,
+              title: 'Transparenz',
+              desc: 'Keine versteckten Kosten. Wir informieren Sie offen über die Kosten und den Arbeitsfortschritt in jeder Phase.',
+            },
+            {
+              icon: Users,
+              title: 'Persönliche Ansprechpartner',
+              desc: 'Kein Callcenter. Sie sprechen direkt mit Disponenten, die Ihr Geschäft verstehen.',
+            },
+            {
+              icon: ShieldCheck,
+              title: 'Maximale Sicherheit',
+              desc: 'Geschultes Fahrpersonal, gesicherte Ladung und top-gewartete Fahrzeuge.',
+            },
+          ].map((w, i) => (
+            <div key={i} className={s.whyItem}>
+              <div className={s.whyIconWrap}>
+                <w.icon size={38} />
+              </div>
+              <h4 className={s.whyTitle}>{w.title}</h4>
+              <p className={s.whyDesc}>{w.desc}</p>
             </div>
-            <h4 className='text-xl font-bold text-white mb-3'>Transparenz</h4>
-            <p className='text-gray-300'>
-              Keine versteckten Kosten. Wir informieren Sie offen über die Kosten und den
-              Arbeitsfortschritt in jeder Phase.
-            </p>
-          </div>
-          <div className='flex flex-col items-center text-center'>
-            <div className='bg-white/10 p-6 rounded-full mb-6 backdrop-blur-sm'>
-              <Users size={40} className='text-signal-500' />
-            </div>
-            <h4 className='text-xl font-bold text-white mb-3'>Persönliche Ansprechpartner</h4>
-            <p className='text-gray-300'>
-              Kein Callcenter. Sie sprechen direkt mit Disponenten, die Ihr Geschäft verstehen.
-            </p>
-          </div>
-          <div className='flex flex-col items-center text-center'>
-            <div className='bg-white/10 p-6 rounded-full mb-6 backdrop-blur-sm'>
-              <ShieldCheck size={40} className='text-signal-500' />
-            </div>
-            <h4 className='text-xl font-bold text-white mb-3'>Maximale Sicherheit</h4>
-            <p className='text-gray-300'>
-              Geschultes Fahrpersonal, gesicherte Ladung und top-gewartete Fahrzeuge.
-            </p>
-          </div>
+          ))}
         </div>
 
-        <div className='mt-12 text-center'>
+        <div className={s.sectionCta}>
           <Button variant='white' onClick={() => openForm(FormType.GENERAL)}>
             Unverbindliches Angebot anfordern
           </Button>
         </div>
       </Section>
 
-      {/* --- Logistics Outsourcing --- */}
+      {/* ===== LOGISTICS ===== */}
       <Section id='logistics'>
-        <div className='flex flex-col lg:flex-row gap-16'>
-          <div className='lg:w-1/2'>
-            <h2 className='text-signal-500 font-bold tracking-wider uppercase mb-2'>
-              Logistik-Outsourcing für Unternehmen
-            </h2>
-            <h3 className='text-4xl font-extrabold text-navy-900 mb-6'>
+        <div className={s.logisticsRow}>
+          <div className={s.logisticsLeft}>
+            <p className={s.sectionLabel}>Logistik-Outsourcing für Unternehmen</p>
+            <h3 className={s.sectionTitle}>
               Sie konzentrieren sich auf die Produktion — wir übernehmen die gesamte Logistik.
             </h3>
-            <p className='text-lg text-gray-600 mb-8'>
+            <p className={s.bodyText}>
               Die Unterhaltung einer eigenen Logistikabteilung, eines Fuhrparks und von Personal
               bedeutet hohe laufende Kosten. Wir bieten vollständiges Logistik-Outsourcing:
               Lieferung, Transporte, Routenplanung, Kontrolle und Reporting — alles aus einer Hand.
             </p>
 
-            <p className='text-lg text-gray-600'>Mit uns müssen Sie nicht:</p>
-            <ul className='space-y-4 mb-8'>
+            <p className={s.bodyText}>Mit uns müssen Sie nicht:</p>
+            <ul className={s.dotList}>
               {[
                 'eine eigene Logistikabteilung unterhalten',
                 'Fahrzeuge kaufen und warten',
                 'Fahrer und Disponenten einstellen',
                 'operative Logistikfragen lösen',
               ].map((item, i) => (
-                <li key={i} className='flex items-center text-navy-900 font-medium mt-2'>
-                  {/* <CheckCircle className='text-signal-500 mr-3 flex-shrink-0' size={20} /> */}•{' '}
+                <li key={i} className={s.dotItem}>
                   {item}
                 </li>
               ))}
             </ul>
 
-            <p className='text-lg text-gray-600 mb-8 font-bold'>
+            <p className={s.boldText}>
               Sie produzieren das Produkt. Wir sorgen für seine Lieferung.
             </p>
 
-            <p className='text-lg text-gray-600 mb-4'>
-              Was Sie durch die Zusammenarbeit mit uns erhalten
-            </p>
-            <ul className='space-y-4 mb-8'>
+            <p className={s.subLabel}>Was Sie durch die Zusammenarbeit mit uns erhalten</p>
+            <ul className={s.checkList}>
               {[
                 'Umfassende logistische Betreuung — von der Planung bis zur Lieferung an den Endkunden',
                 'Eigener Fuhrpark — ohne Einbindung externer Transportunternehmen',
@@ -315,8 +271,8 @@ export const HomeDe = () => {
                 'Flexibilität und Skalierbarkeit — einfache Anpassung der Volumen nach Bedarf',
                 'Transparenz — klare Prozesse und regelmäßiges Reporting',
               ].map((item, i) => (
-                <li key={i} className='flex items-center text-navy-900 font-medium'>
-                  <CheckCircle className='text-signal-500 mr-3 flex-shrink-0' size={20} />
+                <li key={i} className={s.checkItem}>
+                  <CheckCircle size={18} />
                   {item}
                 </li>
               ))}
@@ -326,8 +282,8 @@ export const HomeDe = () => {
               Kostenlose Logistik-Analyse
             </Button>
 
-            <p className='text-lg text-gray-600 mb-4 mt-8'>Ergebnis für Ihr Unternehmen</p>
-            <ul className='space-y-4 mb-8'>
+            <p className={s.subLabel}>Ergebnis für Ihr Unternehmen</p>
+            <ul className={s.checkList}>
               {[
                 'geringere Kosten',
                 'kein eigener Logistikstab',
@@ -335,26 +291,21 @@ export const HomeDe = () => {
                 'volle Kontrolle ohne operative Einbindung',
                 'mehr Zeit für Entwicklung und Produktion',
               ].map((item, i) => (
-                <li key={i} className='flex items-center text-navy-900 font-medium '>
-                  <CheckCircle className='text-signal-500 mr-3 flex-shrink-0' size={20} />
+                <li key={i} className={s.checkItem}>
+                  <CheckCircle size={18} />
                   {item}
                 </li>
               ))}
             </ul>
           </div>
 
-          <div className='lg:w-1/2'>
-            <h4 className='text-2xl font-bold text-navy-900 mb-8'>
-              Wie wir mit Unternehmen arbeiten
-            </h4>
-            <div className='space-y-8 relative'>
-              {/* Vertical line */}
-              <div className='absolute left-6 top-4 bottom-4 w-0.5 bg-gray-200'></div>
-
+          <div className={s.logisticsRight}>
+            <h4 className={s.stepsTitle}>Wie wir mit Unternehmen arbeiten</h4>
+            <div className={s.stepsContainer}>
               {[
                 {
                   title: 'Wir analysieren Ihr Geschäft',
-                  titleList: 'Wir analysieren::',
+                  subLabel: 'Wir analysieren:',
                   list: [
                     'Produktionsvolumen',
                     'Art und Häufigkeit der Transporte',
@@ -365,7 +316,7 @@ export const HomeDe = () => {
                 },
                 {
                   title: 'Wir übernehmen die Logistik vollständig',
-                  titleList: 'Wir übernehmen die volle Verantwortung für:',
+                  subLabel: 'Wir übernehmen die volle Verantwortung für:',
                   list: [
                     'Organisation der Transporte',
                     'Fuhrparkmanagement',
@@ -377,45 +328,40 @@ export const HomeDe = () => {
                 },
                 {
                   title: 'Lieferung mit eigenem Fuhrpark',
-                  titleList: 'Wir nutzen unseren eigenen Fuhrpark, was garantiert:',
+                  subLabel: 'Wir nutzen unseren eigenen Fuhrpark, was garantiert:',
                   list: [
                     'Stabilität',
                     'Qualitätskontrolle',
                     'Termintreue',
-                    'keine „Zwischenhändler“',
+                    'keine „Zwischenhändler"',
                   ],
                   desc: '👉 Weniger Risiken — mehr Verantwortung auf unserer Seite.',
                 },
                 {
                   title: 'Optimierung und Reporting',
-                  titleList: 'Wir:',
+                  subLabel: 'Wir:',
                   list: [
                     'optimieren kontinuierlich die Routen',
                     'senken Kosten',
                     'erhöhen die Liefergeschwindigkeit',
-                    'liefern transparente und verständliche Berichte',
+                    'liefern transparente Berichte',
                   ],
-                  desc: '👉 Ihre Logistik funktioniert als System — nicht als ständiges „Feuerlöschen“.',
+                  desc: '👉 Ihre Logistik funktioniert als System — nicht als ständiges „Feuerlöschen".',
                 },
               ].map((step, idx) => (
-                <div key={idx} className='relative flex items-start'>
-                  <div className='flex-shrink-0 w-12 h-12 rounded-full bg-navy-900 text-white flex items-center justify-center font-bold z-10 border-4 border-white shadow-md'>
-                    {idx + 1}
-                  </div>
-
-                  <div className='ml-6 pt-2'>
-                    <h5 className='text-lg font-bold text-navy-900'>{step.title}</h5>
-                    <p className='text-lg text-gray-600 mt-4'>{step.titleList}</p>
-                    <ul className='space-y-4 mb-8'>
-                      {step.list.map((listText, i) => (
-                        <li key={i} className='flex items-center text-navy-900 font-medium mt-2'>
-                          {/* <CheckCircle className='text-signal-500 mr-3 flex-shrink-0' size={20} /> */}
-                          • {''} {listText}
+                <div key={idx} className={s.step}>
+                  <div className={s.stepNum}>{idx + 1}</div>
+                  <div className={s.stepBody}>
+                    <h5 className={s.stepTitle}>{step.title}</h5>
+                    <p className={s.stepSubLabel}>{step.subLabel}</p>
+                    <ul className={s.dotList}>
+                      {step.list.map((item, i) => (
+                        <li key={i} className={s.dotItem}>
+                          {item}
                         </li>
                       ))}
                     </ul>
-
-                    <p className='text-gray-600 '>{step.desc}</p>
+                    <p className={s.stepDesc}>{step.desc}</p>
                   </div>
                 </div>
               ))}
@@ -424,183 +370,120 @@ export const HomeDe = () => {
         </div>
       </Section>
 
-      {/* --- Moving Services --- */}
-      <Section id='moving' className='bg-gray-100'>
-        <div className='bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-200'>
-          <div className='grid md:grid-cols-2'>
-            <div className='p-12 flex flex-col justify-center'>
-              <div className='flex items-center gap-2 mb-4'>
-                <Package className='text-signal-500' />
-                <span className='text-sm font-bold text-gray-500 uppercase tracking-wide'>
-                  B2B & B2C
-                </span>
+      {/* ===== MOVING ===== */}
+      <Section id='moving' gray>
+        <div className={s.movingCard}>
+          <div className={s.movingGrid}>
+            <div className={s.movingContent}>
+              <div className={s.movingTag}>
+                <Package size={18} />
+                <span>B2B & B2C</span>
               </div>
-              <h3 className='text-3xl font-extrabold text-navy-900 mb-4'>
-                Umzüge in ganz Deutschland
-              </h3>
-              <p className='text-gray-600 mb-8'>
+              <h3 className={s.movingTitle}>Umzüge in ganz Deutschland</h3>
+              <p className={s.movingDesc}>
                 Ob Firmenumzug oder privater Wohnungswechsel – wir bringen Ihr Hab und Gut sicher
                 ans Ziel. Inklusive Montage, Verpackung und Versicherung.
               </p>
               <Button onClick={() => openForm(FormType.MOVING)}>Individuelles Umzugsangebot</Button>
             </div>
             <div
-              className='h-64 md:h-auto bg-cover bg-center'
-              style={{
-                backgroundImage:
-                  'url("https://images.unsplash.com/photo-1600518464441-9154a4dea21b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80")',
-              }}></div>
+              className={s.movingImage}
+              style={{ backgroundImage: 'url("/images/newPhotoLastSection.jpg")' }}
+            />
           </div>
         </div>
       </Section>
 
-      {/* --- Career & Footer --- */}
-      <footer className='bg-navy-900 text-white border-t border-navy-800'>
-        <div className='max-w-7xl mx-auto px-4 md:px-8 lg:px-16 pt-20 pb-10'>
-          <div className='grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16'>
-            {/* Brand */}
+      {/* ===== FOOTER ===== */}
+      <footer className={s.footer}>
+        <div className={s.footerInner}>
+          <div className={s.footerGrid}>
             <div>
-              <a
-                href='#'
-                className='text-2xl font-extrabold text-white tracking-tighter mb-6 block'>
-                <span className='text-signal-500'>Kantsedal Artem</span>
+              <a href='#' className={s.footerLogo}>
+                <span>Kantsedal Artem</span>
               </a>
-              <p className='text-gray-400 text-sm leading-relaxed mb-6'>
+              <p className={s.footerDesc}>
                 Ihr zuverlässiger Partner für Transporte und Logistiklösungen in Deutschland und
                 Europa.
               </p>
-              <div className='flex space-x-4'>
-                {/* Social Placeholders */}
-                <div className='w-8 h-8 bg-navy-800 rounded flex items-center justify-center hover:bg-signal-500 transition-colors cursor-pointer'>
-                  <span className='font-bold'>in</span>
+              <div className={s.socialRow}>
+                <div className={s.socialIcon}>in</div>
+                <div className={s.socialIcon}>fb</div>
+              </div>
+            </div>
+
+            <div>
+              <h4 className={s.footerColTitle}>Navigation</h4>
+              <div className={s.footerLinks}>
+                <a href='#about'>Über uns</a>
+                <a href='#transport'>Transporte</a>
+                <a href='#logistics'>Logistik</a>
+                <a href='#moving'>Umzüge</a>
+              </div>
+            </div>
+
+            <div>
+              <h4 className={s.footerColTitle}>Kontakt</h4>
+              <div className={s.contactList}>
+                <div className={s.contactItem}>
+                  <MapPin size={16} />
+                  <span>
+                    Bahnhofstr 7<br />
+                    85221 Dachau
+                  </span>
                 </div>
-                <div className='w-8 h-8 bg-navy-800 rounded flex items-center justify-center hover:bg-signal-500 transition-colors cursor-pointer'>
-                  <span className='font-bold'>fb</span>
+                <div className={s.contactItem}>
+                  <Phone size={16} />
+                  <a href='tel:+4915115885744'>+49 1511 5885744</a>
+                </div>
+                <div className={s.contactItem}>
+                  <span className={s.contactAt}>@</span>
+                  <a href='mailto:hinundher.de@gmail.com'>hinundher.de@gmail.com</a>
                 </div>
               </div>
             </div>
 
-            {/* Quick Links */}
-            <div>
-              <h4 className='font-bold text-lg mb-6'>Navigation</h4>
-              <ul className='space-y-3 text-gray-400 text-sm'>
-                <li>
-                  <a href='#about' className='hover:text-signal-500 transition-colors'>
-                    Über uns
-                  </a>
+            <div className={s.careerBox}>
+              <h4 className={s.careerTitle}>Karriere</h4>
+              <p className={s.careerSub}>Wir wachsen weiter! Suchen aktuell:</p>
+              <ul className={s.careerList}>
+                <li className={s.careerItem}>
+                  <ChevronRight size={12} /> LKW-Fahrer (CE)
                 </li>
-                <li>
-                  <a href='#transport' className='hover:text-signal-500 transition-colors'>
-                    Transporte
-                  </a>
-                </li>
-                <li>
-                  <a href='#logistics' className='hover:text-signal-500 transition-colors'>
-                    Logistik
-                  </a>
-                </li>
-                <li>
-                  <a href='#moving' className='hover:text-signal-500 transition-colors'>
-                    Umzüge
-                  </a>
+                <li className={s.careerItem}>
+                  <ChevronRight size={12} /> Disponenten
                 </li>
               </ul>
-            </div>
-
-            {/* Contact */}
-            <div>
-              <h4 className='font-bold text-lg mb-6'>Kontakt</h4>
-              <ul className='space-y-4 text-gray-400 text-sm'>
-                <li className='flex items-start'>
-                  <MapPin size={18} className='mr-3 text-signal-500 mt-0.5' />
-                  <span>
-                    Pflaumdorfer tr.5
-                    <br />
-                    86922 Eresing
-                  </span>
-                </li>
-                <li className='flex items-center'>
-                  <Phone size={18} className='mr-3 text-signal-500' />
-                  <a href='tel:+4915115885744'>
-                    <span>+49 1511 5885744</span>
-                  </a>
-                </li>
-                <li className='flex items-center'>
-                  <span className='w-4 h-4 mr-3 flex items-center justify-center text-signal-500 font-bold'>
-                    @
-                  </span>
-                  <a href='mailto:hinundher.de@gmail.com' target='_blank'>
-                    <span>hinundher.de@gmail.com</span>
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            {/* Career Teaser */}
-            <div className='bg-navy-800 p-6 rounded-lg'>
-              <h4 className='font-bold text-white mb-2'>Karriere</h4>
-              <p className='text-xs text-gray-400 mb-4'>Wir wachsen weiter! Suchen aktuell:</p>
-              <ul className='text-xs text-gray-300 space-y-2 mb-4'>
-                <li className='flex items-center'>
-                  <ChevronRight size={12} className='text-signal-500 mr-1' /> LKW-Fahrer (CE)
-                </li>
-                <li className='flex items-center'>
-                  <ChevronRight size={12} className='text-signal-500 mr-1' /> Disponenten
-                </li>
-              </ul>
-              <a
-                href='#'
-                className='text-xs font-bold text-signal-500 hover:text-white transition-colors'>
+              <a href='#' className={s.careerLink}>
                 Jetzt bewerben &rarr;
               </a>
             </div>
           </div>
 
-          <div className='border-t border-navy-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500'>
+          <div className={s.footerBottom}>
             <p>&copy; 2026 Kantsedal Artem GmbH. Alle Rechte vorbehalten.</p>
-            <div className='flex space-x-6 mt-4 md:mt-0'>
-              <a href='#' className='hover:text-white'>
-                Impressum
-              </a>
-              <a href='#' className='hover:text-white'>
-                Datenschutz
-              </a>
-              <a href='#' className='hover:text-white'>
-                AGB
-              </a>
+            <div className={s.footerLegal}>
+              <a href='#'>Impressum</a>
+              <a href='#'>Datenschutz</a>
+              <a href='#'>AGB</a>
             </div>
           </div>
         </div>
       </footer>
 
-      {/* --- Modals --- */}
-      <Modal
-        isOpen={activeForm === FormType.TRANSPORT}
-        onClose={closeForm}
-        title='Frachtkosten Kalkulation'>
-        <LeadForm type={FormType.TRANSPORT} onSuccess={closeForm} />
-      </Modal>
-
-      <Modal
-        isOpen={activeForm === FormType.LOGISTICS}
-        onClose={closeForm}
-        title='Logistik-Analyse anfordern'>
-        <LeadForm type={FormType.LOGISTICS} onSuccess={closeForm} />
-      </Modal>
-
-      <Modal
-        isOpen={activeForm === FormType.MOVING}
-        onClose={closeForm}
-        title='Umzugsangebot anfordern'>
-        <LeadForm type={FormType.MOVING} onSuccess={closeForm} />
-      </Modal>
-
-      <Modal
-        isOpen={activeForm === FormType.GENERAL}
-        onClose={closeForm}
-        title='Allgemeine Anfrage'>
-        <LeadForm type={FormType.GENERAL} onSuccess={closeForm} />
-      </Modal>
+      {/* Modals */}
+      {(
+        [
+          { ft: FormType.TRANSPORT, title: 'Frachtkosten Kalkulation' },
+          { ft: FormType.LOGISTICS, title: 'Logistik-Analyse anfordern' },
+          { ft: FormType.MOVING, title: 'Umzugsangebot anfordern' },
+          { ft: FormType.GENERAL, title: 'Allgemeine Anfrage' },
+        ] as { ft: FormType; title: string }[]
+      ).map(({ ft, title }) => (
+        <Modal key={ft} isOpen={activeForm === ft} onClose={closeForm} title={title}>
+          <LeadForm type={ft} onSuccess={closeForm} />
+        </Modal>
+      ))}
     </div>
   );
 };

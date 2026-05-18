@@ -1,10 +1,10 @@
 import { LucideIcon } from 'lucide-react';
 
 export enum FormType {
-  TRANSPORT = 'TRANSPORT',
-  LOGISTICS = 'LOGISTICS',
-  MOVING = 'MOVING',
-  GENERAL = 'GENERAL'
+  TRANSPORT = 'transport',
+  LOGISTICS = 'logistics',
+  MOVING = 'moving',
+  GENERAL = 'general',
 }
 
 export interface FeatureProps {

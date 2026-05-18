@@ -1,0 +1,220 @@
+@use '../../src/styles/globals' as *;
+
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  transition:
+    background-color var(--transition-base),
+    padding var(--transition-base),
+    box-shadow var(--transition-base);
+  padding: 24px 0;
+}
+
+.navScrolled {
+  background-color: var(--color-navy);
+  box-shadow: var(--shadow-lg);
+  padding: 12px 0;
+}
+
+.navTransparent {
+  background-color: transparent;
+}
+
+.inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 16px;
+
+  @media (min-width: 640px) {
+    padding: 0 24px;
+  }
+
+  @media (min-width: 1024px) {
+    padding: 0 32px;
+  }
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+// Logo
+.logo {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--color-white);
+  letter-spacing: -0.03em;
+  text-decoration: none;
+}
+
+.logoAccent {
+  color: var(--color-primary);
+}
+
+// Desktop nav
+.desktopNav {
+  display: none;
+  align-items: center;
+  gap: 32px;
+
+  @media (min-width: 768px) {
+    display: flex;
+  }
+}
+
+.navLink {
+  color: var(--color-white);
+  font-weight: 500;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+  font-size: 0.9375rem;
+
+  &:hover {
+    color: var(--color-primary);
+  }
+}
+
+// Language switcher
+.langSwitch {
+  position: relative;
+}
+
+.langBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-white);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9375rem;
+  transition: color var(--transition-fast);
+
+  &:hover {
+    color: var(--color-primary);
+  }
+}
+
+.langDropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background-color: var(--color-white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-xl);
+  min-width: 160px;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--transition-fast),
+    visibility var(--transition-fast);
+  overflow: hidden;
+
+  .langSwitch:hover & {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.langOption {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 12px 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9375rem;
+  font-family: inherit;
+  text-align: left;
+  transition: background-color var(--transition-fast);
+  gap: 8px;
+
+  &:hover {
+    background-color: var(--color-gray-100);
+  }
+}
+
+// Mobile controls
+.mobileControls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  @media (min-width: 768px) {
+    display: none;
+  }
+}
+
+.iconBtn {
+  background: none;
+  border: none;
+  color: var(--color-white);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+}
+
+// Mobile menu
+.mobileMenu {
+  background-color: var(--color-navy);
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  box-shadow: var(--shadow-xl);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+  @media (min-width: 768px) {
+    display: none;
+  }
+}
+
+.mobileMenuInner {
+  padding: 16px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.mobileLangSection {
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.mobileLangLabel {
+  color: var(--color-gray-400);
+  font-size: 0.8125rem;
+  margin-bottom: 10px;
+}
+
+.mobileLangFlags {
+  display: flex;
+  gap: 16px;
+}
+
+.mobileFlagBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.75rem;
+  display: flex;
+  align-items: center;
+  transition: transform var(--transition-fast);
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.mobileCtaWrapper {
+  padding-top: 8px;
+}

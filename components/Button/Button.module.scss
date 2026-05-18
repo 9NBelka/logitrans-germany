@@ -1,0 +1,95 @@
+@use '../../src/styles/globals' as *;
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-family: inherit;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition:
+    background-color var(--transition-base),
+    box-shadow var(--transition-base),
+    color var(--transition-base),
+    border-color var(--transition-base);
+  outline: none;
+  white-space: nowrap;
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+// Variants
+.primary {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  box-shadow: var(--shadow-md);
+
+  &:hover:not(:disabled) {
+    background-color: var(--color-primary-dark);
+    box-shadow: var(--shadow-lg);
+  }
+}
+
+.secondary {
+  background-color: var(--color-navy);
+  color: var(--color-white);
+  box-shadow: var(--shadow-sm);
+
+  &:hover:not(:disabled) {
+    background-color: var(--color-navy-light);
+  }
+}
+
+.outline {
+  background-color: transparent;
+  border: 2px solid var(--color-white);
+  color: var(--color-white);
+
+  &:hover:not(:disabled) {
+    background-color: var(--color-white);
+    color: var(--color-navy);
+  }
+}
+
+.white {
+  background-color: var(--color-white);
+  color: var(--color-navy);
+  box-shadow: var(--shadow-sm);
+
+  &:hover:not(:disabled) {
+    background-color: var(--color-gray-100);
+  }
+}
+
+// Sizes
+.sm {
+  padding: 8px 16px;
+  font-size: 0.875rem;
+}
+
+.md {
+  padding: 12px 24px;
+  font-size: 1rem;
+}
+
+.lg {
+  padding: 16px 32px;
+  font-size: 1.125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+// Full width
+.fullWidth {
+  width: 100%;
+}

@@ -1,10 +1,11 @@
 // App.tsx
 import React from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
-import { Navigation } from './components/Navigation';
+import { Navigation } from './components/Navigation/Navigation';
 import { HomeDe } from './pages/HomeDe';
 import { HomeUa } from './pages/HomeUa';
 import { LanguageProvider } from './context/LanguageContext';
+import './src/styles/globals.scss';
 
 function AppContent() {
   const location = useLocation();
@@ -12,14 +13,12 @@ function AppContent() {
 
   return (
     <LanguageProvider lang={lang}>
-      <div className='min-h-screen bg-gray-50 font-sans text-slate-800'>
-        <Navigation />
-        <Routes>
-          <Route path='/' element={<HomeDe />} />
-          <Route path='/ua' element={<HomeUa />} />
-          <Route path='*' element={<HomeDe />} />
-        </Routes>
-      </div>
+      <Navigation />
+      <Routes>
+        <Route path='/' element={<HomeDe />} />
+        <Route path='/ua' element={<HomeUa />} />
+        <Route path='*' element={<HomeDe />} />
+      </Routes>
     </LanguageProvider>
   );
 }
