@@ -4,6 +4,10 @@ import { Button } from '../components/Button/Button';
 import { Modal } from '../components/Modal/Modal';
 import { LeadForm } from '../components/LeadForm/LeadForm';
 import { FormType } from '../types';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Navigation } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
 import {
   Truck,
   MapPin,
@@ -30,10 +34,7 @@ export const HomeDe = () => {
       {/* ===== HERO ===== */}
       <div className={s.hero}>
         <div className={s.heroBg}>
-          <img
-            src='https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80'
-            alt='Logistics Truck on Road'
-          />
+          <img src='/images/hero-bg-main.jpg' alt='Logistics Truck on Road' />
           <div className={s.heroOverlay} />
         </div>
 
@@ -117,12 +118,26 @@ export const HomeDe = () => {
           </div>
 
           <div className={s.imageBlock}>
-            <div className={s.imageTilt} />
-            <img
-              src='/images/screen-two.jpg'
-              alt='Professional Logistics Team'
-              className={s.mainImage}
-            />
+            {/* <div className={s.imageTilt} /> */}
+
+            <Swiper
+              modules={[Autoplay, Navigation]}
+              autoplay={{ delay: 5000, disableOnInteraction: false }}
+              navigation
+              loop
+              className={s.swiper}>
+              {[
+                '/images/slide-image-one.jpg',
+                '/images/slide-image-two.jpg',
+                '/images/slide-image-three.jpg',
+                '/images/slide-image-four.jpg',
+              ].map((src, i) => (
+                <SwiperSlide key={i}>
+                  <img src={src} alt={`Slide ${i + 1}`} className={s.mainImage} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+
             <div className={s.liveCard}>
               <div className={s.liveCardHeader}>
                 <div className={s.liveDot} />
