@@ -122,7 +122,7 @@ export const HomeDe = () => {
 
             <Swiper
               modules={[Autoplay, Navigation]}
-              autoplay={{ delay: 5000, disableOnInteraction: false }}
+              autoplay={{ delay: 2000, disableOnInteraction: false }}
               navigation
               loop
               className={s.swiper}>
