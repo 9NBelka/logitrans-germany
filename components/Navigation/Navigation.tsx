@@ -7,6 +7,7 @@ import { Modal } from '../Modal/Modal';
 import { LeadForm } from '../LeadForm/LeadForm';
 import { useLanguage } from '../../context/LanguageContext';
 import styles from './Navigation.module.scss';
+import { BsWhatsapp } from 'react-icons/bs';
 
 export const Navigation = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -110,6 +111,11 @@ export const Navigation = () => {
                 </div>
               </div>
 
+              <div className={styles.contactItem}>
+                <BsWhatsapp size={16} />
+                <a href='https://wa.me/491753426987'>+49 1511 5885744</a>
+              </div>
+
               <Button variant='primary' size='sm' onClick={() => openForm(FormType.TRANSPORT)}>
                 {t.requestFreight}
               </Button>
@@ -160,6 +166,11 @@ export const Navigation = () => {
                     🇺🇦
                   </button>
                 </div>
+              </div>
+
+              <div className={styles.contactItem}>
+                <BsWhatsapp size={16} />
+                <a href='https://wa.me/491753426987'>+49 1511 5885744</a>
               </div>
 
               <div className={styles.mobileCtaWrapper}>

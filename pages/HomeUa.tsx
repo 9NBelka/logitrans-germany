@@ -22,6 +22,8 @@ import {
   ArrowRight,
 } from 'lucide-react';
 import s from '../src/styles/Home.module.scss';
+import clsx from 'clsx';
+import { BsWhatsapp } from 'react-icons/bs';
 
 export const HomeUa = () => {
   const [activeForm, setActiveForm] = useState<FormType | null>(null);
@@ -444,7 +446,15 @@ export const HomeUa = () => {
                 </div>
                 <div className={s.contactItem}>
                   <Phone size={16} />
-                  <a href='tel:+4915115885744'>+49 1511 5885744</a>
+                  <a href='tel:+491753426987'>+49 1753 426987</a>
+                </div>
+                <div className={s.contactItem}>
+                  <Phone size={16} />
+                  <a href='tel:+491733970527'>+49 1733 970527</a>
+                </div>
+                <div className={s.contactItem}>
+                  <BsWhatsapp size={16} />
+                  <a href='https://wa.me/491753426987'>+49 1511 5885744</a>
                 </div>
                 <div className={s.contactItem}>
                   <span className={s.contactAt}>@</span>
