@@ -487,9 +487,11 @@ export const HomeDe = () => {
           <div className={s.footerBottom}>
             <p>&copy; 2026 Kantsedal Artem GmbH. Alle Rechte vorbehalten.</p>
             <div className={s.footerLegal}>
-              <a href='#'>Impressum</a>
-              <a href='#'>Datenschutz</a>
-              <a href='#'>AGB</a>
+              {/* <a href='#'>Impressum</a> */}
+              <a href='/privacy-policy' target='_blank'>
+                Datenschutzerklärung
+              </a>
+              {/* <a href='#'>AGB</a> */}
             </div>
           </div>
         </div>

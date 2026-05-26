@@ -483,9 +483,11 @@ export const HomeUa = () => {
           <div className={s.footerBottom}>
             <p>&copy; 2026 Kantsedal Artem GmbH. Усі права захищено.</p>
             <div className={s.footerLegal}>
-              <a href='#'>Вихідні дані</a>
-              <a href='#'>Захист даних</a>
-              <a href='#'>Умови</a>
+              {/* <a href='#'>Вихідні дані</a> */}
+              <a href='/ua/privacy-policy' target='_blank'>
+                Політика конфіденційності
+              </a>
+              {/* <a href='#'>Умови</a> */}
             </div>
           </div>
         </div>

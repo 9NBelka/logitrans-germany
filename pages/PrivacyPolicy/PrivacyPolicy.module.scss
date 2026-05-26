@@ -1,0 +1,217 @@
+.privacyPolicyMainBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #171717;
+  padding: 2vw 2vw;
+  padding-top: 5vw;
+  position: relative;
+
+  & .backText {
+    position: absolute;
+    top: 1%;
+    left: 5%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 0.65vw;
+    color: var(--color-gray-200);
+    font-family: var(--font-sans);
+    font-weight: var(--font-weight-light);
+    line-height: var(--font-lineh-normal);
+    margin-top: 3vw;
+    text-transform: uppercase;
+    cursor: pointer;
+
+    & .icon {
+      width: 1vw;
+      height: 1vw;
+      fill: var(--color-gray-200);
+    }
+  }
+
+  & .privacyPolicyBlock {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    background: rgba(10, 10, 10, 0.5);
+    padding: 3vw 1.5vw;
+    border-radius: 0.5vw;
+  }
+
+  & .privacyPolicyTitle {
+    text-align: center;
+    font-size: 1.6vw;
+    color: var(--color-white);
+    font-family: var(--font-sans);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--font-lineh-small);
+    letter-spacing: -0.025em;
+
+    & span {
+      background: linear-gradient(to right, var(--color-primary), var(--color-primary-dark));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+    }
+  }
+
+  & .privacyPolicyDescriptions {
+    font-size: 0.65vw;
+    color: var(--color-gray-300);
+    font-family: var(--font-sans);
+    font-weight: var(--font-weight-light);
+    line-height: var(--font-lineh-normal);
+    margin-top: 3vw;
+  }
+
+  & .privacyPolicyMainList {
+    display: flex;
+    flex-direction: column;
+
+    & .privacyPolicyMainListTitle {
+      font-size: 1vw;
+      color: var(--color-white);
+      font-family: var(--font-sans);
+      font-weight: var(--font-weight-bold);
+      line-height: var(--font-lineh-small);
+      margin-top: 2vw;
+
+      &.privacyPolicyMainListTitleDown {
+        font-size: 0.75vw;
+        font-weight: var(--font-weight-smallBold);
+        margin-top: 1vw;
+      }
+    }
+
+    & .privacyPolicyMainListDescriptions {
+      font-size: 0.65vw;
+      color: var(--color-gray-200);
+      font-family: var(--font-sans);
+      font-weight: var(--font-weight-light);
+      line-height: var(--font-lineh-normal);
+      margin-top: 1vw;
+    }
+
+    & .privacyPolicyList {
+      font-size: 0.65vw;
+      color: var(--color-gray-200);
+      font-family: var(--font-sans);
+      font-weight: var(--font-weight-light);
+      line-height: var(--font-lineh-normal);
+      margin-top: 1vw;
+      padding-left: 1vw;
+
+      & li {
+        margin-top: 0.25vw;
+
+        &:first-child {
+          margin-top: 0;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .privacyPolicyMainBlock {
+    padding: 3vw;
+    padding-top: 10vw;
+
+    & .backText {
+      display: none;
+    }
+
+    & .privacyPolicyBlock {
+      width: 100%;
+      padding: 5vw 3vw;
+      border-radius: 1.5vw;
+    }
+
+    & .privacyPolicyTitle {
+      font-size: 3.6vw;
+    }
+
+    & .privacyPolicyDescriptions {
+      font-size: 1.8vw;
+      margin-top: 3vw;
+    }
+
+    & .privacyPolicyMainList {
+      & .privacyPolicyMainListTitle {
+        font-size: 2.2vw;
+        margin-top: 3vw;
+
+        &.privacyPolicyMainListTitleDown {
+          font-size: 2vw;
+          margin-top: 1.5vw;
+        }
+      }
+
+      & .privacyPolicyMainListDescriptions {
+        font-size: 1.8vw;
+        margin-top: 1.5vw;
+      }
+
+      & .privacyPolicyList {
+        font-size: 1.8vw;
+        margin-top: 1vw;
+        padding-left: 2.5vw;
+
+        & li {
+          margin-top: 0.5vw;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .privacyPolicyMainBlock {
+    padding: 8vw 3vw;
+    padding-top: 20vw;
+
+    & .privacyPolicyBlock {
+      padding: 5vw 4vw;
+      border-radius: 3vw;
+    }
+
+    & .privacyPolicyTitle {
+      font-size: 6vw;
+    }
+
+    & .privacyPolicyDescriptions {
+      font-size: 3.6vw;
+      margin-top: 5vw;
+    }
+
+    & .privacyPolicyMainList {
+      & .privacyPolicyMainListTitle {
+        font-size: 3.6vw;
+        margin-top: 7vw;
+
+        &.privacyPolicyMainListTitleDown {
+          font-size: 3.2vw;
+          margin-top: 2.5vw;
+        }
+      }
+
+      & .privacyPolicyMainListDescriptions {
+        font-size: 3.6vw;
+        margin-top: 3vw;
+      }
+
+      & .privacyPolicyList {
+        font-size: 3.6vw;
+        margin-top: 1.5vw;
+        padding-left: 4vw;
+
+        & li {
+          margin-top: 1vw;
+        }
+      }
+    }
+  }
+}
