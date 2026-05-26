@@ -12,6 +12,9 @@ interface LeadFormProps {
 export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
   const { lang } = useLanguage();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const N8N_WEBHOOK_URL = import.meta.env.VITE_N8N_WEBHOOK_URL;
 
   const t = {
     firstName: lang === 'de' ? 'Vorname' : 'Імʼя',
@@ -28,8 +31,8 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
         : 'Ваші дані передаються безпечно та зашифровано.',
     successMessage:
       lang === 'de'
-        ? 'Vielen Dank! Ihre Anfrage wurde erfolgreich gesendet. Wir werden uns in Kürze bei Ihnen melden.'
-        : "Дякуємо! Ваш запит успішно надіслано. Ми зв'яжемося з вами найближчим часом.",
+        ? 'Vielen Dank! Ihre Anfrage wurde erfolgreich gesendet.'
+        : 'Дякуємо! Ваш запит успішно надіслано.',
 
     from: lang === 'de' ? 'Abgangsort (PLZ/Ort)' : 'Місце відправлення (індекс/місто)',
     to: lang === 'de' ? 'Empfangsort (PLZ/Ort)' : 'Місце призначення (індекс/місто)',
@@ -53,14 +56,83 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
     areaPlaceholder: lang === 'de' ? 'z.B. 85' : 'наприклад, 85',
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (isSubmitting) return;
+
     setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
+    setError(null);
+
+    const form = e.currentTarget as HTMLFormElement; // ← добавь эту строку
+    const fd = new FormData(form);
+
+    const payload: Record<string, unknown> = {
+      formType: type,
+      lang,
+      firstName: fd.get('firstName'),
+      lastName: fd.get('lastName'),
+      company: fd.get('company'),
+      email: fd.get('email'),
+      phone: fd.get('phone'),
+    };
+
+    if (type === FormType.TRANSPORT) {
+      Object.assign(payload, {
+        from: fd.get('from'),
+        to: fd.get('to'),
+        cargoType: fd.get('cargoType'),
+        quantity: fd.get('quantity'),
+        length: fd.get('length'),
+        width: fd.get('width'),
+        height: fd.get('height'),
+        weight: fd.get('weight'),
+      });
+    }
+
+    if (type === FormType.LOGISTICS) {
+      payload.challenge = fd.get('challenge');
+    }
+
+    if (type === FormType.MOVING) {
+      Object.assign(payload, {
+        fromZip: fd.get('fromZip'),
+        toZip: fd.get('toZip'),
+        area: fd.get('area'),
+      });
+    }
+
+    try {
+      if (!N8N_WEBHOOK_URL) {
+        throw new Error('Webhook URL not configured');
+      }
+
+      const res = await fetch(N8N_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        mode: 'cors',
+      });
+
+      if (!res.ok) {
+        const errorText = await res.text().catch(() => '');
+        console.error('Webhook error:', res.status, errorText);
+        throw new Error(`HTTP ${res.status}`);
+      }
+
+      form.reset(); // ← теперь безопасно
       onSuccess();
       alert(t.successMessage);
-    }, 1500);
+    } catch (err) {
+      console.error('Ошибка отправки:', err);
+      setError(
+        lang === 'de'
+          ? 'Fehler beim Senden. Bitte versuchen Sie es erneut.'
+          : 'Помилка при відправці. Спробуйте ще раз.',
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const renderSpecificFields = () => {
@@ -72,6 +144,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
               <label className={styles.label}>{t.from}</label>
               <input
                 required
+                name='from'
                 type='text'
                 className={styles.input}
                 placeholder='z.B. 10115 Berlin'
@@ -81,6 +154,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
               <label className={styles.label}>{t.to}</label>
               <input
                 required
+                name='to'
                 type='text'
                 className={styles.input}
                 placeholder='z.B. 80331 München'
@@ -89,7 +163,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
             <div className={styles.grid2}>
               <div>
                 <label className={styles.label}>{t.cargoType}</label>
-                <select className={styles.select}>
+                <select name='cargoType' className={styles.select}>
                   <option>{t.optionTypeOne}</option>
                   <option>{t.optionTypeTwo}</option>
                   <option>{t.optionTypeThree}</option>
@@ -98,23 +172,23 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
               </div>
               <div>
                 <label className={styles.label}>{t.quantity}</label>
-                <input type='text' className={styles.input} placeholder='1' />
+                <input name='quantity' type='text' className={styles.input} placeholder='1' />
               </div>
               <div>
                 <label className={styles.label}>{t.length}</label>
-                <input type='text' className={styles.input} placeholder='120' />
+                <input name='length' type='text' className={styles.input} placeholder='120' />
               </div>
               <div>
                 <label className={styles.label}>{t.width}</label>
-                <input type='text' className={styles.input} placeholder='80' />
+                <input name='width' type='text' className={styles.input} placeholder='80' />
               </div>
               <div>
                 <label className={styles.label}>{t.height}</label>
-                <input type='text' className={styles.input} placeholder='100' />
+                <input name='height' type='text' className={styles.input} placeholder='100' />
               </div>
               <div>
                 <label className={styles.label}>{t.weight}</label>
-                <input type='text' className={styles.input} placeholder='300' />
+                <input name='weight' type='text' className={styles.input} placeholder='300' />
               </div>
             </div>
           </>
@@ -126,6 +200,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
             <label className={styles.label}>{t.challenge}</label>
             <textarea
               required
+              name='challenge'
               rows={3}
               className={styles.textarea}
               placeholder={t.challengePlaceholder}
@@ -139,17 +214,18 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
             <div className={styles.grid2}>
               <div>
                 <label className={styles.label}>{t.fromZip}</label>
-                <input required type='text' className={styles.input} />
+                <input required name='fromZip' type='text' className={styles.input} />
               </div>
               <div>
                 <label className={styles.label}>{t.toZip}</label>
-                <input required type='text' className={styles.input} />
+                <input required name='toZip' type='text' className={styles.input} />
               </div>
             </div>
             <div className={styles.field}>
               <label className={styles.label}>{t.area}</label>
               <input
                 required
+                name='area'
                 type='number'
                 className={styles.input}
                 placeholder={t.areaPlaceholder}
@@ -168,27 +244,27 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
       <div className={styles.grid2}>
         <div>
           <label className={styles.label}>{t.firstName}</label>
-          <input required type='text' className={styles.input} />
+          <input required name='firstName' type='text' className={styles.input} />
         </div>
         <div>
           <label className={styles.label}>{t.lastName}</label>
-          <input required type='text' className={styles.input} />
+          <input required name='lastName' type='text' className={styles.input} />
         </div>
       </div>
 
       <div className={styles.field}>
         <label className={styles.label}>{t.company}</label>
-        <input type='text' className={styles.input} />
+        <input name='company' type='text' className={styles.input} />
       </div>
 
       <div className={styles.field}>
         <label className={styles.label}>{t.email}</label>
-        <input required type='email' className={styles.input} />
+        <input required name='email' type='email' className={styles.input} />
       </div>
 
       <div className={styles.field}>
         <label className={styles.label}>{t.phone}</label>
-        <input required type='tel' className={styles.input} />
+        <input required name='phone' type='tel' className={styles.input} />
       </div>
 
       <div className={styles.requestBox}>
@@ -197,6 +273,8 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
       </div>
 
       <div className={styles.footer}>
+        {error && <p style={{ color: 'red', marginBottom: '10px' }}>{error}</p>}
+
         <Button type='submit' variant='primary' fullWidth disabled={isSubmitting}>
           {isSubmitting ? t.submitting : t.submit}
         </Button>

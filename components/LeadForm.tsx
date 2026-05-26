@@ -57,6 +57,7 @@ interface LeadFormProps {
 }
 
 export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
+  console.log('🔄 LeadForm component mounted. Type:', type); // ← добавь эту строку
   const { lang } = useLanguage();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -214,9 +215,9 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log('=== FORM SUBMIT ===');
+    console.log('🚀 handleSubmit ВЫЗВАН!');
     console.log('Webhook URL:', N8N_WEBHOOK_URL);
-    // console.log('Payload:', JSON.stringify(payload, null, 2));
+    console.log('Form Type:', type);
 
     if (isSubmitting) return;
 
