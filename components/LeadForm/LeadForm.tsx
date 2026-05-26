@@ -1,8 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FormType } from '../../types';
 import { Button } from '../Button/Button';
 import { useLanguage } from '../../context/LanguageContext';
 import styles from './Leadform.module.scss';
+
+const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+
+let googleMapsPromise: Promise<void> | null = null;
+
+function loadGoogleMapsScript(): Promise<void> {
+  if (typeof window === 'undefined') return Promise.resolve();
+  if (window.google?.maps?.places) return Promise.resolve();
+  if (googleMapsPromise) return googleMapsPromise;
+
+  googleMapsPromise = new Promise((resolve, reject) => {
+    const existing = document.getElementById('google-maps-script') as HTMLScriptElement | null;
+
+    if (existing) {
+      existing.addEventListener('load', () => resolve());
+      existing.addEventListener('error', () => reject());
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.id = 'google-maps-script';
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places`;
+    script.async = true;
+    script.defer = true;
+
+    script.onload = () => resolve();
+    script.onerror = () => reject(new Error('Google Maps failed to load'));
+
+    document.head.appendChild(script);
+  });
+
+  return googleMapsPromise;
+}
 
 interface LeadFormProps {
   type: FormType;
@@ -15,6 +48,59 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
   const [error, setError] = useState<string | null>(null);
 
   const N8N_WEBHOOK_URL = import.meta.env.VITE_N8N_WEBHOOK_URL;
+
+  // Refs для автокомплита
+  const fromRef = useRef<HTMLInputElement>(null);
+  const toRef = useRef<HTMLInputElement>(null);
+
+  // Google Autocomplete
+  useEffect(() => {
+    if (type !== FormType.TRANSPORT) return;
+
+    let fromListener: google.maps.MapsEventListener | null = null;
+    let toListener: google.maps.MapsEventListener | null = null;
+
+    let acFrom: google.maps.places.Autocomplete | null = null;
+    let acTo: google.maps.places.Autocomplete | null = null;
+
+    loadGoogleMapsScript()
+      .then(() => {
+        const options: google.maps.places.AutocompleteOptions = {
+          types: ['(regions)'],
+          fields: ['formatted_address', 'name'],
+        };
+
+        if (fromRef.current) {
+          acFrom = new google.maps.places.Autocomplete(fromRef.current, options);
+          fromListener = acFrom.addListener('place_changed', () => {
+            const place = acFrom?.getPlace();
+            if (fromRef.current && place) {
+              fromRef.current.value = place.formatted_address || place.name || '';
+            }
+          });
+        }
+
+        if (toRef.current) {
+          acTo = new google.maps.places.Autocomplete(toRef.current, options);
+          toListener = acTo.addListener('place_changed', () => {
+            const place = acTo?.getPlace();
+            if (toRef.current && place) {
+              toRef.current.value = place.formatted_address || place.name || '';
+            }
+          });
+        }
+      })
+      .catch((err) => {
+        console.error('Google Maps failed to initialize:', err);
+      });
+
+    return () => {
+      fromListener?.remove();
+      toListener?.remove();
+      if (acFrom) google.maps.event.clearInstanceListeners(acFrom);
+      if (acTo) google.maps.event.clearInstanceListeners(acTo);
+    };
+  }, [type]);
 
   const t = {
     firstName: lang === 'de' ? 'Vorname' : 'Імʼя',
@@ -64,7 +150,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
     setIsSubmitting(true);
     setError(null);
 
-    const form = e.currentTarget as HTMLFormElement; // ← добавь эту строку
+    const form = e.currentTarget as HTMLFormElement;
     const fd = new FormData(form);
 
     const payload: Record<string, unknown> = {
@@ -103,9 +189,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
     }
 
     try {
-      if (!N8N_WEBHOOK_URL) {
-        throw new Error('Webhook URL not configured');
-      }
+      if (!N8N_WEBHOOK_URL) throw new Error('Webhook URL not configured');
 
       const res = await fetch(N8N_WEBHOOK_URL, {
         method: 'POST',
@@ -114,22 +198,14 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
         mode: 'cors',
       });
 
-      if (!res.ok) {
-        const errorText = await res.text().catch(() => '');
-        console.error('Webhook error:', res.status, errorText);
-        throw new Error(`HTTP ${res.status}`);
-      }
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
-      form.reset(); // ← теперь безопасно
+      form.reset();
       onSuccess();
       alert(t.successMessage);
     } catch (err) {
       console.error('Ошибка отправки:', err);
-      setError(
-        lang === 'de'
-          ? 'Fehler beim Senden. Bitte versuchen Sie es erneut.'
-          : 'Помилка при відправці. Спробуйте ще раз.',
-      );
+      setError(lang === 'de' ? 'Fehler beim Senden...' : 'Помилка при відправці...');
     } finally {
       setIsSubmitting(false);
     }
@@ -144,6 +220,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
               <label className={styles.label}>{t.from}</label>
               <input
                 required
+                ref={fromRef}
                 name='from'
                 type='text'
                 className={styles.input}
@@ -154,6 +231,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
               <label className={styles.label}>{t.to}</label>
               <input
                 required
+                ref={toRef}
                 name='to'
                 type='text'
                 className={styles.input}
