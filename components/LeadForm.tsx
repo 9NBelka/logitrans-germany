@@ -5,7 +5,7 @@ import { FormType } from '../types';
 import { Button } from './Button/Button';
 import { useLanguage } from '../context/LanguageContext';
 
-const N8N_WEBHOOK_URL = import.meta.env.N8N_WEBHOOK_URL;
+const N8N_WEBHOOK_URL = import.meta.env.VITE_N8N_WEBHOOK_URL;
 
 const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
