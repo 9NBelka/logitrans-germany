@@ -109,3 +109,23 @@ button {
     opacity: 0.5;
   }
 }
+
+.hdpi.pac-logo::after {
+  display: none !important;
+}
+
+.pac-logo:after {
+  display: none !important;
+  content: '';
+  padding: 1px 1px 1px 0;
+  height: 18px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  text-align: right;
+  display: block;
+  background-image: url(https://maps.gstatic.com/mapfiles/api-3/images/powered-by-google-on-white3.png);
+  background-position: 100%;
+  background-repeat: no-repeat;
+  -webkit-background-size: 120px 14px;
+  background-size: 120px 14px;
+}
