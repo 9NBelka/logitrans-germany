@@ -214,6 +214,10 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    console.log('=== FORM SUBMIT ===');
+    console.log('Webhook URL:', N8N_WEBHOOK_URL);
+    // console.log('Payload:', JSON.stringify(payload, null, 2));
+
     if (isSubmitting) return;
 
     setIsSubmitting(true);
@@ -268,11 +272,16 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(payload),
+        mode: 'cors',
       });
 
       if (!res.ok) {
+        const errorText = await res.text().catch(() => 'No error text');
+        console.error('Webhook error:', res.status, errorText);
         throw new Error(`HTTP ${res.status}`);
       }
+
+      console.log('✅ Успешно отправлено в n8n');
 
       setSuccess(true);
 
