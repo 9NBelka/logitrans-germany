@@ -46,6 +46,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
   const { lang } = useLanguage();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [privacyAccepted, setPrivacyAccepted] = useState(false);
 
   const N8N_WEBHOOK_URL = import.meta.env.VITE_N8N_WEBHOOK_URL;
 
@@ -111,10 +112,23 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
     yourRequest: lang === 'de' ? 'Ihre Anfrage' : 'Ваш запит',
     submit: lang === 'de' ? 'Kostenlos anfragen' : 'Надіслати безкоштовно',
     submitting: lang === 'de' ? 'Wird gesendet...' : 'Відправляється...',
-    privacy:
+    privacyNote:
       lang === 'de'
         ? 'Ihre Daten werden sicher und verschlüsselt übertragen.'
         : 'Ваші дані передаються безпечно та зашифровано.',
+
+    privacyConsent:
+      lang === 'de'
+        ? 'Ich habe es gelesen und werde damit zurechtkommen.'
+        : 'Я прочитав(-ла) та погоджуюсь з ',
+
+    privacyLinkText: lang === 'de' ? 'Datenschutzerklärung' : 'Політикою конфіденційності',
+
+    errorPrivacy:
+      lang === 'de'
+        ? 'Bitte stimmen Sie der Datenschutzerklärung zu.'
+        : 'Будь ласка, погодьтесь з Політикою конфіденційності.',
+
     successMessage:
       lang === 'de'
         ? 'Vielen Dank! Ihre Anfrage wurde erfolgreich gesendet.'
@@ -145,6 +159,11 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (!privacyAccepted) {
+      setError(t.errorPrivacy);
+      return;
+    }
+
     if (isSubmitting) return;
 
     setIsSubmitting(true);
@@ -161,6 +180,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
       company: fd.get('company'),
       email: fd.get('email'),
       phone: fd.get('phone'),
+      privacyAccepted: privacyAccepted,
     };
 
     if (type === FormType.TRANSPORT) {
@@ -201,6 +221,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
       form.reset();
+      setPrivacyAccepted(false);
       onSuccess();
       alert(t.successMessage);
     } catch (err) {
@@ -348,6 +369,26 @@ export const LeadForm: React.FC<LeadFormProps> = ({ type, onSuccess }) => {
       <div className={styles.requestBox}>
         <h4 className={styles.requestTitle}>{t.yourRequest}</h4>
         {renderSpecificFields()}
+      </div>
+
+      <div className={styles.privacyConsent}>
+        <label className={styles.checkboxContainer}>
+          <input
+            type='checkbox'
+            checked={privacyAccepted}
+            onChange={(e) => setPrivacyAccepted(e.target.checked)}
+            required
+          />
+          <span>
+            {t.privacyConsent}{' '}
+            <a
+              href={lang === 'de' ? '/privacy-policy' : '/ua/privacy-policy'}
+              target='_blank'
+              rel='noopener noreferrer'>
+              {t.privacyLinkText}.
+            </a>
+          </span>
+        </label>
       </div>
 
       <div className={styles.footer}>

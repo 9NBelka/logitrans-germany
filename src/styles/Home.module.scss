@@ -630,6 +630,10 @@
   margin: 0 auto;
   padding: 80px 24px 40px;
 
+  &.isNotMenu {
+    padding: 0px 24px 20px;
+  }
+
   @media (min-width: 768px) {
     padding: 80px 48px 40px;
   }

@@ -66,6 +66,17 @@
   margin-bottom: 12px;
 }
 
+.checkboxContainer {
+  & input {
+    margin-right: 7px;
+  }
+
+  & a {
+    text-decoration: underline;
+    color: var(--color-navy-light);
+  }
+}
+
 .footer {
   margin-top: 24px;
 }

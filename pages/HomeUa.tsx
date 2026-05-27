@@ -24,6 +24,7 @@ import {
 import s from '../src/styles/Home.module.scss';
 import clsx from 'clsx';
 import { BsWhatsapp } from 'react-icons/bs';
+import Footer from '../components/Footer/Footer';
 
 export const HomeUa = () => {
   const [activeForm, setActiveForm] = useState<FormType | null>(null);
@@ -412,86 +413,7 @@ export const HomeUa = () => {
       </Section>
 
       {/* ===== FOOTER ===== */}
-      <footer className={s.footer}>
-        <div className={s.footerInner}>
-          <div className={s.footerGrid}>
-            <div>
-              <a href='#' className={s.footerLogo}>
-                <span>Kantsedal Artem</span>
-              </a>
-              <p className={s.footerDesc}>
-                Ваш надійний партнер з перевезень та логістичних рішень у Німеччині та Європі.
-              </p>
-            </div>
-
-            <div>
-              <h4 className={s.footerColTitle}>Навігація</h4>
-              <div className={s.footerLinks}>
-                <a href='#about'>Про нас</a>
-                <a href='#transport'>Перевезення</a>
-                <a href='#logistics'>Логістика</a>
-                <a href='#moving'>Переїзди</a>
-              </div>
-            </div>
-
-            <div>
-              <h4 className={s.footerColTitle}>Контакти</h4>
-              <div className={s.contactList}>
-                <div className={s.contactItem}>
-                  <MapPin size={16} />
-                  <span>
-                    Bahnhofstr 7<br />
-                    85221 Dachau
-                  </span>
-                </div>
-                <div className={s.contactItem}>
-                  <Phone size={16} />
-                  <a href='tel:+491753426987'>+49 1753 426987</a>
-                </div>
-                <div className={s.contactItem}>
-                  <Phone size={16} />
-                  <a href='tel:+491733970527'>+49 1733 970527</a>
-                </div>
-                <div className={s.contactItem}>
-                  <BsWhatsapp size={16} />
-                  <a href='https://wa.me/491753426987'>+49 1511 5885744</a>
-                </div>
-                <div className={s.contactItem}>
-                  <span className={s.contactAt}>@</span>
-                  <a href='mailto:hinundher.de@gmail.com'>hinundher.de@gmail.com</a>
-                </div>
-              </div>
-            </div>
-
-            <div className={s.careerBox}>
-              <h4 className={s.careerTitle}>Карʼєра</h4>
-              <p className={s.careerSub}>Ми продовжуємо зростати! Наразі шукаємо:</p>
-              <ul className={s.careerList}>
-                <li className={s.careerItem}>
-                  <ChevronRight size={12} /> Водій вантажівки (CE)
-                </li>
-                <li className={s.careerItem}>
-                  <ChevronRight size={12} /> Диспетчери
-                </li>
-              </ul>
-              <a href='#' className={s.careerLink}>
-                Подати заявку →
-              </a>
-            </div>
-          </div>
-
-          <div className={s.footerBottom}>
-            <p>&copy; 2026 Kantsedal Artem GmbH. Усі права захищено.</p>
-            <div className={s.footerLegal}>
-              {/* <a href='#'>Вихідні дані</a> */}
-              <a href='/ua/privacy-policy' target='_blank'>
-                Політика конфіденційності
-              </a>
-              {/* <a href='#'>Умови</a> */}
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
 
       {/* Modals */}
       {(

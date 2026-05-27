@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import s from '../src/styles/Home.module.scss';
 import { BsWhatsapp } from 'react-icons/bs';
+import Footer from '../components/Footer/Footer';
 
 export const HomeDe = () => {
   const [activeForm, setActiveForm] = useState<FormType | null>(null);
@@ -411,91 +412,7 @@ export const HomeDe = () => {
       </Section>
 
       {/* ===== FOOTER ===== */}
-      <footer className={s.footer}>
-        <div className={s.footerInner}>
-          <div className={s.footerGrid}>
-            <div>
-              <a href='#' className={s.footerLogo}>
-                <span>Kantsedal Artem</span>
-              </a>
-              <p className={s.footerDesc}>
-                Ihr zuverlässiger Partner für Transporte und Logistiklösungen in Deutschland und
-                Europa.
-              </p>
-              <div className={s.socialRow}>
-                <div className={s.socialIcon}>in</div>
-                <div className={s.socialIcon}>fb</div>
-              </div>
-            </div>
-
-            <div>
-              <h4 className={s.footerColTitle}>Navigation</h4>
-              <div className={s.footerLinks}>
-                <a href='#about'>Über uns</a>
-                <a href='#transport'>Transporte</a>
-                <a href='#logistics'>Logistik</a>
-                <a href='#moving'>Umzüge</a>
-              </div>
-            </div>
-
-            <div>
-              <h4 className={s.footerColTitle}>Kontakt</h4>
-              <div className={s.contactList}>
-                <div className={s.contactItem}>
-                  <MapPin size={16} />
-                  <span>
-                    Bahnhofstr 7<br />
-                    85221 Dachau
-                  </span>
-                </div>
-                <div className={s.contactItem}>
-                  <Phone size={16} />
-                  <a href='tel:+4915115885744'>+49 1511 5885744</a>
-                </div>
-                <div className={s.contactItem}>
-                  <Phone size={16} />
-                  <a href='tel:+491733970527'>+49 1733 970527</a>
-                </div>
-                <div className={s.contactItem}>
-                  <BsWhatsapp size={16} />
-                  <a href='https://wa.me/491753426987'>+49 1511 5885744</a>
-                </div>
-                <div className={s.contactItem}>
-                  <span className={s.contactAt}>@</span>
-                  <a href='mailto:hinundher.de@gmail.com'>hinundher.de@gmail.com</a>
-                </div>
-              </div>
-            </div>
-
-            <div className={s.careerBox}>
-              <h4 className={s.careerTitle}>Karriere</h4>
-              <p className={s.careerSub}>Wir wachsen weiter! Suchen aktuell:</p>
-              <ul className={s.careerList}>
-                <li className={s.careerItem}>
-                  <ChevronRight size={12} /> LKW-Fahrer (CE)
-                </li>
-                <li className={s.careerItem}>
-                  <ChevronRight size={12} /> Disponenten
-                </li>
-              </ul>
-              <a href='#' className={s.careerLink}>
-                Jetzt bewerben &rarr;
-              </a>
-            </div>
-          </div>
-
-          <div className={s.footerBottom}>
-            <p>&copy; 2026 Kantsedal Artem GmbH. Alle Rechte vorbehalten.</p>
-            <div className={s.footerLegal}>
-              {/* <a href='#'>Impressum</a> */}
-              <a href='/privacy-policy' target='_blank'>
-                Datenschutzerklärung
-              </a>
-              {/* <a href='#'>AGB</a> */}
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
 
       {/* Modals */}
       {(
